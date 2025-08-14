@@ -1,31 +1,8 @@
 import React from 'react';
 import type { Account } from '../types';
-import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-} from 'chart.js';
-import { Wifi, TrendingUp, CreditCard } from 'lucide-react';
-import { useBreakpoint, useIsTouchDevice } from '../hooks';
+import { Wifi } from 'lucide-react';
+import { useBreakpoint } from '../hooks';
 import { formatCurrency } from '../utils';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
 
 interface ResponsiveAccountCardProps {
   account: Account;
@@ -35,12 +12,9 @@ interface ResponsiveAccountCardProps {
 
 export const ResponsiveAccountCard: React.FC<ResponsiveAccountCardProps> = ({ 
   account, 
-  onClick,
-  variant = 'full' 
+  onClick
 }) => {
   const breakpoint = useBreakpoint();
-  const isTouchDevice = useIsTouchDevice();
-  const isNumbered = account.type === 'numbered';
   
   // Responsive sizing
   const cardHeight = {
@@ -51,45 +25,8 @@ export const ResponsiveAccountCard: React.FC<ResponsiveAccountCardProps> = ({
     xl: 'h-64',
     '2xl': 'h-64',
   }[breakpoint];
-  
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: { enabled: !isTouchDevice },
-    },
-    scales: {
-      x: { display: false },
-      y: { display: false },
-    },
-  };
-
-  const chartData = {
-    labels: account.chartData.labels,
-    datasets: [
-      {
-        data: account.chartData.values,
-        borderColor: 'rgba(139, 69, 19, 0.5)', // Brown color for gold card
-        backgroundColor: 'rgba(139, 69, 19, 0.1)',
-        borderWidth: 2,
-        pointRadius: 0,
-        tension: 0.4,
-        fill: true,
-      },
-    ],
-  };
-
-  // Format account number like credit card
-  const formatAccountNumber = (num: string) => {
-    if (num.startsWith('GB')) {
-      return ''; // Don't show GB Account text
-    }
-    return `**** **** **** ${num.slice(-4)}`;
-  };
 
   const isDesktop = breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl';
-  const showChart = variant === 'full'; // Always show chart when variant is full
 
   return (
     <div

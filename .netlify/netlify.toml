@@ -10,7 +10,6 @@ redirects = []
 publish = "/Users/ilijaGlavas/StudioProjects/NomoPay/dist"
 publishOrigin = "ui"
 commandOrigin = "ui"
-base = "/Users/ilijaGlavas/StudioProjects/NomoPay"
 command = "npm run build"
 
 [build.environment]

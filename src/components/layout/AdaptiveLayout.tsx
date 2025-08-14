@@ -1,7 +1,6 @@
 import React from 'react';
 import { useIsDesktop } from '../../hooks';
 import { DesktopSidebar } from '../navigation/DesktopSidebar';
-import { MobileBottomNav } from '../navigation/MobileBottomNav';
 import { ResponsiveContainer } from './ResponsiveContainer';
 
 interface AdaptiveLayoutProps {
