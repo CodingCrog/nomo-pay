@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(mv:*)",
+      "Bash(rmdir:*)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run lint)",
+      "Bash(npx tsc:*)",
+      "Bash(curl:*)",
+      "Bash(npm run build:*)",
+      "Bash(pkill:*)",
+      "Bash(rm:*)",
+      "Bash(npm uninstall:*)",
+      "mcp__filesystem__directory_tree",
+      "mcp__filesystem__list_allowed_directories"
+    ],
+    "deny": [],
+    "defaultMode": "acceptEdits"
+  }
+}
