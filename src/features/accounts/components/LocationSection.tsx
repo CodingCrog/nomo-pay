@@ -18,7 +18,7 @@ export const LocationSection: React.FC<LocationSectionProps> = ({
   const { colors } = useTheme();
   
   return (
-    <section className={location === 'singapore' ? 'pb-20' : 'mb-8'}>
+    <section className={location === 'singapore' ? 'pb-20' : 'mb-8'} style={{ position: 'relative', zIndex: 5 }}>
       <LocationCard location={location} onClick={onLocationClick} />
       
       <div className="space-y-3">

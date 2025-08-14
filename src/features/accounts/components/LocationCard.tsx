@@ -1,6 +1,6 @@
 import React from 'react';
 import { Settings } from 'lucide-react';
-import { LondonEyeIcon, SupertreesIcon } from '../../../assets/icons';
+import { useTheme } from '../../../context/ThemeContext';
 
 interface LocationCardProps {
   location: 'london' | 'singapore';
@@ -8,55 +8,45 @@ interface LocationCardProps {
 }
 
 export const LocationCard: React.FC<LocationCardProps> = ({ location, onClick }) => {
+  const { colors } = useTheme();
   const config = {
     london: {
       flag: '🇬🇧',
       title: 'London',
-      gradient: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
-      shadow: '0 4px 12px rgba(30, 60, 114, 0.3)',
-      Icon: LondonEyeIcon,
     },
     singapore: {
       flag: '🇸🇬',
       title: 'Singapore',
-      gradient: 'linear-gradient(135deg, #d32f2f 0%, #f57c00 100%)',
-      shadow: '0 4px 12px rgba(211, 47, 47, 0.3)',
-      Icon: SupertreesIcon,
     },
   };
   
-  const { flag, title, gradient, shadow, Icon } = config[location];
+  const { flag, title } = config[location];
   
   return (
     <div 
-      className="relative mb-4 rounded-xl overflow-hidden h-24 cursor-pointer"
-      style={{ 
-        background: gradient,
-        boxShadow: shadow
-      }}
+      className="mb-4 flex items-center justify-between cursor-pointer relative px-4"
       onClick={onClick}
+      style={{ zIndex: 10 }}
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-20 overflow-hidden">
-        <Icon />
+      <div style={{ position: 'relative', zIndex: 10 }}>
+        <h3 className="text-xl font-bold" style={{ color: colors.foreground1 }}>{title}</h3>
       </div>
-      
-      <div className="relative z-10 h-full flex items-center justify-between px-6">
-        <div className="flex items-center gap-4">
-          <span className="text-3xl">{flag}</span>
-          <div>
-            <h3 className="text-2xl font-bold text-white font-heading">{title}</h3>
-            <p className="text-white/70 text-sm">Account</p>
-          </div>
-        </div>
+      <div className="flex items-center gap-3">
+        <span className="text-2xl" style={{ position: 'relative', zIndex: 10 }}>{flag}</span>
         <button
           onClick={(e) => {
             e.stopPropagation();
-            console.log(`${title} settings clicked`);
+          //TODO:
           }}
-          className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200"
+          className="p-2 rounded-lg transition-colors duration-200"
+          style={{ 
+            position: 'relative', 
+            zIndex: 10,
+            backgroundColor: colors.background1,
+            color: colors.foreground3
+          }}
         >
-          <Settings size={18} className="text-white/70" />
+          <Settings size={18} />
         </button>
       </div>
     </div>

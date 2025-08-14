@@ -58,9 +58,9 @@ const darkColors: ThemeColors = {
   secondary: '#C0C0C0', // Silver
   onSecondary: '#000000',
   secondaryContainer: '#e6d0a3',
-  background1: 'rgba(26, 35, 50, 0.5)', // Dark blue-gray to match the image
-  background2: 'rgba(30, 41, 59, 0.5)',
-  background3: '#1e293b',
+  background1: '#1a2332', // Dark blue-gray (fully opaque)
+  background2: '#1e293b', // Slightly lighter dark blue
+  background3: '#2d3748',
   surface: '#2d3748',
   error: '#ef4444',
   disabled: '#4A4A4A',

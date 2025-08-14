@@ -10,7 +10,7 @@ interface CurrencyBalanceProps {
   location?: 'london' | 'singapore';
 }
 
-const currencyFlags: Record<string, string> = {
+const CURRENCY_FLAGS: Record<string, string> = {
   EUR: '🇪🇺',
   GBP: '🇬🇧',
   USD: '🇺🇸',
@@ -23,16 +23,8 @@ const currencyFlags: Record<string, string> = {
 };
 
 export const CurrencyBalance: React.FC<CurrencyBalanceProps> = ({ balance, onClick, location }) => {
-  const { colors } = useTheme();
   const navigate = useNavigate();
-  
-  const formatBalance = (amount: number, decimal: number) => {
-    return amount.toLocaleString('en-US', {
-      minimumFractionDigits: decimal,
-      maximumFractionDigits: decimal,
-    });
-  };
-
+  const { colors } = useTheme();
   const isZeroBalance = balance.balance === 0;
   
   const handleClick = () => {
@@ -45,52 +37,76 @@ export const CurrencyBalance: React.FC<CurrencyBalanceProps> = ({ balance, onCli
     }
   };
 
+  // Get currency flag (main icon)
+  const currencyFlag = CURRENCY_FLAGS[balance.currency.code] || '💱';
+  
+  // Get account location flag (badge)
+  const locationFlag = location === 'london' ? '🇬🇧' : 
+                      location === 'singapore' ? '🇸🇬' : null;
+
+  // Format the balance amount
+  const formattedBalance = `${balance.currency.symbol}${balance.balance.toFixed(2)}`;
+
   return (
     <div
       onClick={handleClick}
-      className="p-3 rounded-xl border transition-all duration-300 ease-out cursor-pointer hover:shadow-lg"
+      className="flex items-center justify-between p-4 rounded-lg cursor-pointer hover:shadow-md border relative z-20"
       style={{
         backgroundColor: colors.surface,
-        borderColor: colors.secondary + '30',
-        opacity: isZeroBalance ? 0.6 : 1,
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = colors.primary + '80';
-        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = colors.secondary + '30';
-        e.currentTarget.style.boxShadow = '';
+        borderColor: colors.secondary + '40',
+        minHeight: '80px',
       }}
     >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="text-xl">
-            {location === 'london' ? '🇬🇧' : location === 'singapore' ? '🇸🇬' : (currencyFlags[balance.currency.code] || '💱')}
+      <div className="flex items-center gap-3">
+        <div className="relative">
+          <div 
+            className="w-8 h-8 rounded-full flex items-center justify-center"
+            style={{
+              backgroundColor: `${colors.primary}20`,
+            }}
+          >
+            <span style={{ fontSize: '16px' }}>{currencyFlag}</span>
           </div>
-          <div>
-            <h4 className="font-medium text-base" style={{ color: colors.foreground1 }}>
-              {balance.currency.name}
-            </h4>
-            <p className="text-sm" style={{ color: colors.foreground3 }}>
-              {balance.currency.code}
-            </p>
-          </div>
+          {locationFlag && (
+            <span 
+              className="absolute -bottom-1 -right-1"
+              style={{ fontSize: '10px' }}
+            >
+              {locationFlag}
+            </span>
+          )}
         </div>
         
-        <div className="flex items-center space-x-2">
-          <div className="text-right">
-            <p className="font-medium text-lg" style={{ color: colors.foreground1 }}>
-              {balance.currency.symbol}{formatBalance(balance.balance, balance.currency.decimal)}
-            </p>
-            {balance.pending > 0 && (
-              <p className="text-xs" style={{ color: colors.primary }}>
-                {balance.currency.symbol}{formatBalance(balance.pending, balance.currency.decimal)} pending
-              </p>
-            )}
-          </div>
-          <ChevronRight className="w-4 h-4" style={{ color: colors.foreground3 }} />
+        <div>
+          <p className="text-sm font-medium" style={{ color: colors.foreground1 }}>
+            {balance.currency.name}
+          </p>
+          <p className="text-xs" style={{ color: colors.foreground3 }}>
+            {balance.currency.code}
+          </p>
         </div>
+      </div>
+      
+      <div className="text-right flex items-center gap-2">
+        <div>
+          <p 
+            className="text-sm font-medium"
+            style={{ 
+              color: isZeroBalance ? colors.foreground3 : colors.foreground1 
+            }}
+          >
+            {formattedBalance}
+          </p>
+          {isZeroBalance && (
+            <p className="text-xs" style={{ color: colors.foreground3 }}>
+              No balance
+            </p>
+          )}
+        </div>
+        <ChevronRight 
+          size={16}
+          style={{ color: colors.foreground3 }}
+        />
       </div>
     </div>
   );

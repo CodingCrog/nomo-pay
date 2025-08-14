@@ -10,6 +10,9 @@ import { ExchangePage } from './pages/ExchangePage';
 import { DepositPage } from './pages/DepositPage';
 import { WithdrawPage } from './pages/WithdrawPage';
 import { BeneficiariesPage } from './pages/BeneficiariesPage';
+import { SettingsPage } from './pages/SettingsPage';
+import { AnalyticsPage } from './pages/AnalyticsPage';
+import { MorePage } from './pages/MorePage';
 import { useTheme } from './context/ThemeContext';
 
 function App() {
@@ -40,6 +43,9 @@ function App() {
           <Route path="/deposit" element={<DepositPage />} />
           <Route path="/withdraw" element={<WithdrawPage />} />
           <Route path="/beneficiaries" element={<BeneficiariesPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/more" element={<MorePage />} />
         </Routes>
       </div>
     </Router>
