@@ -1,4 +1,4 @@
-import { useDataLoader } from '../../node_modules/nsw-frontend-core-lib/dist/index.js';
+import { useDataLoader } from 'nsw-frontend-core-lib';
 import { GQL_LOADERS } from '../api/loaders';
 
 export interface Identity {

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import { socket, onEvent, offEvent, useNomoConnected, isNomoConnected, useDataLoader } from '../../node_modules/nsw-frontend-core-lib/dist/index.js';
+import { socket, onEvent, offEvent, useNomoConnected, isNomoConnected, useDataLoader } from 'nsw-frontend-core-lib';
 import { isFallbackModeActive } from 'nomo-webon-kit';
 import '../api/loaders'; // Initialize all loaders
 import { QRAuth } from '../components/QRAuth';

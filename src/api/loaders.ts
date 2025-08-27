@@ -1,5 +1,5 @@
-// Import from the compiled dist folder to ensure socket initialization
-import { defineLoader } from "../../node_modules/nsw-frontend-core-lib/dist/index.js";
+// Import from the nsw-frontend-core-lib
+import { defineLoader } from "nsw-frontend-core-lib";
 import {
     getNpaIdentity,
     getNpaIdentityBankAccounts,
@@ -7,7 +7,8 @@ import {
     getNpaTransactionCurrencies,
     getNpaBeneficiaries,
     getUserSettings,
-    isLoggedIn
+    isLoggedIn,
+    getNpaTransactionMethods
 } from "./queries";
 
 export const GQL_LOADERS = {
@@ -18,6 +19,7 @@ export const GQL_LOADERS = {
     get_npa_identity_banktransactions: 'nomopay_get_npa_identity_banktransactions',
     get_npa_currencies: 'nomopay_get_npa_currencies',
     get_npa_beneficiaries: 'nomopay_get_npa_beneficiaries',
+    get_npa_payment_methods: 'nomopay_get_npa_payment_methods',
 };
 
 const SOCKET_RELOAD_MESSAGES = {
@@ -63,6 +65,10 @@ if (!loadersInitialized) {
         defineLoader(GQL_LOADERS.get_npa_beneficiaries, getNpaBeneficiaries, {
             clean_fct: (data: any) => data?.npa_identity?.beneficiaries,
             socket_reload_message: SOCKET_RELOAD_MESSAGES.npabeneficiary_changed,
+        });
+        
+        defineLoader(GQL_LOADERS.get_npa_payment_methods, getNpaTransactionMethods, {
+            clean_fct: (data: any) => data?.npa_transactionmethods,
         });
         
         loadersInitialized = true;

@@ -17,9 +17,15 @@
       "Bash(npm uninstall:*)",
       "mcp__filesystem__directory_tree",
       "mcp__filesystem__list_allowed_directories",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)",
+      "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)"
     ],
     "deny": [],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "acceptEdits",
+    "additionalDirectories": [
+      "/Users/ilijaGlavas/StudioProjects/npay-fe/src/pages",
+      "/Users/ilijaGlavas/StudioProjects/npay-fe/src"
+    ]
   }
 }

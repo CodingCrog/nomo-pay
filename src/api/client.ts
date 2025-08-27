@@ -1,4 +1,4 @@
-import { coreLibQuery, useDataLoader } from "../../node_modules/nsw-frontend-core-lib/dist/index.js";
+import { coreLibQuery, useDataLoader } from "nsw-frontend-core-lib";
 import { GQL_LOADERS } from "./loaders";
 import { 
     adaptBankAccountToAccount, 
@@ -175,6 +175,20 @@ export function useBeneficiaries() {
     return { data: adaptedBeneficiaries, loading: false, error: null };
     } catch (error) {
         console.log('Error loading beneficiaries, falling back to empty:', error);
+        return { data: [], loading: false, error: null };
+    }
+}
+
+export function usePaymentMethods() {
+    try {
+        const methods = useDataLoader(GQL_LOADERS.get_npa_payment_methods).get();
+        
+        // If no data from backend, return empty but not loading
+        if (!methods) return { data: [], loading: false, error: null };
+        
+        return { data: methods, loading: false, error: null };
+    } catch (error) {
+        console.log('Error loading payment methods, falling back to empty:', error);
         return { data: [], loading: false, error: null };
     }
 }

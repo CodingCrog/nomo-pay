@@ -1,6 +1,6 @@
 import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { useSocketNonce } from '../../node_modules/nsw-frontend-core-lib/dist/index.js';
+import { useSocketNonce } from 'nsw-frontend-core-lib';
 import { MdOutlineContentCopy } from 'react-icons/md';
 
 export const QRAuth: React.FC = () => {

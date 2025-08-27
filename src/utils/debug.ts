@@ -1,5 +1,5 @@
 // Debug utilities to check backend connection
-import { socket, isNomoConnected } from '../../node_modules/nsw-frontend-core-lib/dist/index.js';
+import { socket, isNomoConnected } from 'nsw-frontend-core-lib';
 
 export function debugBackendConnection() {
   console.log('=== Backend Connection Debug ===');

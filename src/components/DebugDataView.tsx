@@ -3,7 +3,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useDataContext } from '../context/DataProvider';
 import { useIdentity } from '../hooks/useIdentity';
 import { useAccounts, useBalances, useTransactions, useCurrencies, useBeneficiaries } from '../hooks/useApiData';
-import { useNomoConnected } from '../../node_modules/nsw-frontend-core-lib/dist/index.js';
+import { useNomoConnected } from 'nsw-frontend-core-lib';
 
 export const DebugDataView: React.FC = () => {
   const { colors } = useTheme();

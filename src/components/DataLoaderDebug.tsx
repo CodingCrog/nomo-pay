@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDataLoader, coreLibQuery } from '../../node_modules/nsw-frontend-core-lib/dist/index.js';
+import { useDataLoader, coreLibQuery } from 'nsw-frontend-core-lib';
 import { GQL_LOADERS } from '../api/loaders';
 import { getNpaIdentity, getNpaIdentityBankAccounts } from '../api/queries';
 import { useTheme } from '../context/ThemeContext';

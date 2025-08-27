@@ -17,6 +17,7 @@ import { useTheme } from './context/ThemeContext';
 import { ConnectionStatus } from './components/ConnectionStatus';
 import { DebugDataView } from './components/DebugDataView';
 import { DataLoaderDebug } from './components/DataLoaderDebug';
+import { NotificationContainer } from './components/Notification';
 
 function App() {
   const { colors, colorMode } = useTheme();
@@ -24,6 +25,9 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen transition-colors duration-300 relative" style={{ backgroundColor: colors.background1 }}>
+        {/* Notifications */}
+        <NotificationContainer />
+        
         {/* Connection Status Indicator */}
         <ConnectionStatus />
         
