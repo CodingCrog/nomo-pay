@@ -1,6 +1,6 @@
 import React from 'react';
-import { mockAccounts } from '../data/mockAccounts';
-import { mockCurrencyBalances } from '../data/mockBalances';
+import { useDashboardData } from '../hooks/useApiData';
+import { mockAccounts, mockCurrencyBalances } from '../data/mockData';
 import { AccountSummaryCard, LocationSection } from '../features/accounts/components';
 import { AdaptiveLayout, ResponsiveGrid } from '../components/layout';
 import { useIsDesktop } from '../hooks';
@@ -8,14 +8,33 @@ import { ThemeToggle } from '../features/common/components/ThemeToggle';
 
 export const Dashboard: React.FC = () => {
   const isDesktop = useIsDesktop();
+  const { accounts: apiAccounts, balances: apiBalances, loading } = useDashboardData();
+  
+  // Use API data if available, otherwise fall back to mock data
+  const accounts = apiAccounts.length > 0 ? apiAccounts : mockAccounts;
+  const balances = apiBalances.length > 0 ? apiBalances : mockCurrencyBalances;
   
   // Get balances for both accounts - show all balances including zero
-  const londonBalances = mockCurrencyBalances.filter(
-    (balance) => balance.accountId === mockAccounts[0].id
-  );
-  const singaporeBalances = mockCurrencyBalances.filter(
-    (balance) => balance.accountId === mockAccounts[1].id
-  );
+  const londonAccount = accounts.find((acc: any) => acc.type === 'gb_based');
+  const singaporeAccount = accounts.find((acc: any) => acc.type === 'numbered');
+  
+  const londonBalances = londonAccount 
+    ? balances.filter((balance: any) => balance.accountId === londonAccount.id)
+    : [];
+  const singaporeBalances = singaporeAccount
+    ? balances.filter((balance: any) => balance.accountId === singaporeAccount.id)
+    : [];
+
+  // Don't show loading screen, just use the data we have
+  if (false && loading) {
+    return (
+      <AdaptiveLayout>
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        </div>
+      </AdaptiveLayout>
+    );
+  }
 
   return (
     <AdaptiveLayout>
@@ -30,7 +49,7 @@ export const Dashboard: React.FC = () => {
 
         {/* Main Account Summary - Full width on all screens */}
         <div className="mb-8 lg:mb-10">
-          <AccountSummaryCard accounts={mockAccounts} />
+          <AccountSummaryCard accounts={accounts} />
         </div>
 
         {/* Account Sections - Responsive Grid */}

@@ -1,4 +1,4 @@
-import { mockAccounts, mockCurrencyBalances } from '../../data/mockData';
+import { ApiClient } from '../../api/client';
 import type { Account, CurrencyBalance } from '../../types';
 
 export class AccountService {
@@ -6,25 +6,22 @@ export class AccountService {
    * Fetch all accounts
    */
   static async getAccounts(): Promise<Account[]> {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 100));
-    return mockAccounts;
+    return ApiClient.getAccounts();
   }
 
   /**
    * Fetch account by ID
    */
   static async getAccountById(accountId: string): Promise<Account | null> {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    return mockAccounts.find(acc => acc.id === accountId) || null;
+    const accounts = await this.getAccounts();
+    return accounts.find(acc => acc.id === accountId) || null;
   }
 
   /**
    * Get account balances
    */
   static async getAccountBalances(accountId: string): Promise<CurrencyBalance[]> {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    return mockCurrencyBalances.filter(balance => balance.accountId === accountId);
+    return ApiClient.getBalances(accountId);
   }
 
   /**
@@ -39,8 +36,8 @@ export class AccountService {
    * Get account by type
    */
   static async getAccountByType(type: 'gb_based' | 'numbered'): Promise<Account | null> {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    return mockAccounts.find(acc => acc.type === type) || null;
+    const accounts = await this.getAccounts();
+    return accounts.find(acc => acc.type === type) || null;
   }
 
   /**

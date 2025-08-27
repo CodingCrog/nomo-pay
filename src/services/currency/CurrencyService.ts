@@ -6,6 +6,7 @@ export class CurrencyService {
    * Convert amount to EUR
    */
   static toEUR(amount: number, fromCurrency: string): number {
+    // Still use mock rates for now, but could be fetched from API
     const rate = MOCK_EXCHANGE_RATES[fromCurrency] || 1;
     return amount * rate;
   }

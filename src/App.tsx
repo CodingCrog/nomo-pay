@@ -14,6 +14,9 @@ import { SettingsPage } from './pages/SettingsPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { MorePage } from './pages/MorePage';
 import { useTheme } from './context/ThemeContext';
+import { ConnectionStatus } from './components/ConnectionStatus';
+import { DebugDataView } from './components/DebugDataView';
+import { DataLoaderDebug } from './components/DataLoaderDebug';
 
 function App() {
   const { colors, colorMode } = useTheme();
@@ -21,6 +24,15 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen transition-colors duration-300 relative" style={{ backgroundColor: colors.background1 }}>
+        {/* Connection Status Indicator */}
+        <ConnectionStatus />
+        
+        {/* Debug Data View */}
+        <DebugDataView />
+        
+        {/* Data Loader Debug */}
+        <DataLoaderDebug />
+        
         {/* Global background pattern */}
         <div 
           className="fixed inset-0 pointer-events-none bg-cover bg-center bg-no-repeat"

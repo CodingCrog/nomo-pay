@@ -1,4 +1,4 @@
-import { mockTransactions } from '../../data/mockData';
+import { ApiClient } from '../../api/client';
 import type { Transaction } from '../../types';
 
 export class TransactionService {
@@ -6,18 +6,15 @@ export class TransactionService {
    * Fetch all transactions
    */
   static async getTransactions(): Promise<Transaction[]> {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    return mockTransactions;
+    return ApiClient.getTransactions();
   }
 
   /**
    * Fetch transactions by account ID
    */
   static async getAccountTransactions(accountId: string): Promise<Transaction[]> {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    return mockTransactions
-      .filter(t => t.accountId === accountId)
-      .sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
+    const transactions = await ApiClient.getTransactions(accountId);
+    return transactions.sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
   }
 
   /**
@@ -27,9 +24,9 @@ export class TransactionService {
     accountId: string, 
     currencyCode: string
   ): Promise<Transaction[]> {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    return mockTransactions
-      .filter(t => t.accountId === accountId && t.currency === currencyCode)
+    const transactions = await ApiClient.getTransactions(accountId);
+    return transactions
+      .filter(t => t.currency === currencyCode)
       .sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
   }
 

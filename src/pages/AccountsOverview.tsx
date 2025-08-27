@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { CurrencyBalance } from '../components/CurrencyBalance';
 import { ActionButton } from '../components/ActionButton';
 import { TransactionItem } from '../components/TransactionItem';
+import { useAccountWithBalances, useTransactions } from '../hooks/useApiData';
 import { mockAccounts, mockCurrencyBalances, mockTransactions } from '../data/mockData';
 import { 
   ArrowLeft, 
@@ -19,8 +20,12 @@ export const AccountsOverview: React.FC = () => {
   const { accountId } = useParams<{ accountId: string }>();
   const [showOtherWallets, setShowOtherWallets] = useState(false);
 
-  const account = mockAccounts.find(acc => acc.id === (accountId || '2'));
-  const balances = mockCurrencyBalances.filter(bal => bal.accountId === (accountId || '2'));
+  // Try to use real data, fall back to mock if not available
+  const { account: realAccount, balances: realBalances, loading } = useAccountWithBalances(accountId || '2');
+  const { data: realTransactions } = useTransactions(accountId || '2');
+
+  const account = realAccount || mockAccounts.find(acc => acc.id === (accountId || '2'));
+  const balances = realBalances.length > 0 ? realBalances : mockCurrencyBalances.filter(bal => bal.accountId === (accountId || '2'));
   
   const mainBalances = balances.slice(0, 3);
   const otherBalances = balances.slice(3);
