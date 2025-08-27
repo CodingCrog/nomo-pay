@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import { socket, onEvent, offEvent, useNomoConnected, isNomoConnected, useDataLoader } from 'nsw-frontend-core-lib';
+import { socket, onEvent, offEvent, useNomoConnected, isNomoConnected } from 'nsw-frontend-core-lib';
 import { isFallbackModeActive } from 'nomo-webon-kit';
 import '../api/loaders'; // Initialize all loaders
 import { QRAuth } from '../components/QRAuth';
@@ -27,7 +27,7 @@ const apolloClient = new ApolloClient({
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const [isConnected, setIsConnected] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Don't block initial render
+  const [isLoading] = useState(false); // Don't block initial render
   const [isNomoAuthenticated, setIsNomoAuthenticated] = useState(false);
   const is_nomo_connected = useNomoConnected();
 
@@ -77,17 +77,6 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     return <QRAuth />;
   }
 
-  // Optional: Show loading while waiting for Nomo connection
-  if (false && !is_nomo_connected) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">Waiting for Nomo connection...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <ApolloProvider client={apolloClient}>

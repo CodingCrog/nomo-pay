@@ -97,11 +97,11 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({
   // Filter transactions by account and active currency
   const filteredTransactions = transactions
     .filter(t => t.accountId === accountId && t.currency === activeCurrencyCode)
-    .sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   
   // Group transactions by date
   const groupedTransactions = filteredTransactions.reduce((groups, transaction) => {
-    const date = new Date(transaction.orderDate);
+    const date = new Date(transaction.date);
     const dateKey = format(date, 'yyyy-MM-dd');
     if (!groups[dateKey]) {
       groups[dateKey] = [];
@@ -389,7 +389,7 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({
                 className="text-xs font-medium mb-3 px-1"
                 style={{ color: colors.foreground3 }}
               >
-                {formatDateHeader(new Date(dayTransactions[0].orderDate))}
+                {formatDateHeader(new Date(dayTransactions[0].date))}
               </h2>
               <div className="space-y-2">
                 {dayTransactions.map((transaction) => (

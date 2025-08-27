@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, CreditCard, Building2, Wallet, AlertCircle, CheckCircle } from 'lucide-react';
 import { useMutation } from '@apollo/client';
 import { mutationCreateDeposit } from '../api/mutations';
-import { useAccounts, useBalances, useCurrencies, usePaymentMethods } from '../api/client';
+import { useAccounts, useCurrencies, usePaymentMethods } from '../api/client';
 import { validateDeposit, formatCurrency } from '../utils/validation';
 import { LoadingSpinner, LoadingOverlay } from '../components/LoadingSpinner';
-import { notificationManager } from '../components/Notification';
+import { notificationManager } from '../utils/notificationManager';
 import { useTheme } from '../context/ThemeContext';
 import { mockAccounts } from '../data/mockAccounts';
 import { mockCurrencies } from '../data/mockCurrencies';
@@ -124,7 +124,7 @@ export const DepositPage: React.FC = () => {
     
     try {
       // Find the currency ID (in real app, this would come from the currencies query)
-      const currencyId = currencies.find(c => c.code === selectedCurrency)?.id || '1';
+      // const currencyId = currencies.find(c => c.code === selectedCurrency)?.id || '1';
       
       await createDeposit({
         variables: {

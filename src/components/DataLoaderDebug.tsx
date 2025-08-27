@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDataLoader, coreLibQuery } from 'nsw-frontend-core-lib';
 import { GQL_LOADERS } from '../api/loaders';
-import { getNpaIdentity, getNpaIdentityBankAccounts } from '../api/queries';
+import { getNpaIdentity, getNpaIdentityBankTransactions } from '../api/queries';
 import { useTheme } from '../context/ThemeContext';
+import { DebugPanel } from './debug/DebugPanel';
 
 export const DataLoaderDebug: React.FC = () => {
   const { colors } = useTheme();
@@ -13,6 +14,7 @@ export const DataLoaderDebug: React.FC = () => {
   // Try to use the data loaders
   const identityLoader = useDataLoader(GQL_LOADERS.get_npa_identity);
   const accountsLoader = useDataLoader(GQL_LOADERS.get_npa_identity_bankaccounts);
+  const transactionsLoader = useDataLoader(GQL_LOADERS.get_npa_identity_banktransactions);
   
   // Test direct query
   const testDirectQuery = async () => {
@@ -34,35 +36,46 @@ export const DataLoaderDebug: React.FC = () => {
     }
   };
   
+  // Test transactions query
+  const testTransactionsQuery = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      console.log('Testing transactions GraphQL query...');
+      const result = await coreLibQuery({
+        query: getNpaIdentityBankTransactions,
+        variables: {}
+      });
+      console.log('Transactions query result:', result);
+      setTestResult(result);
+    } catch (err: any) {
+      console.error('Transactions query error:', err);
+      setError(err?.message || 'Transaction query failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   // Get loader data
-  const identityData = identityLoader.peek();
-  const accountsData = accountsLoader.peek();
+  const identityData = identityLoader.get();
+  const accountsData = accountsLoader.get();
+  const transactionsData = transactionsLoader.get();
   
   useEffect(() => {
     // Try to get data from loaders
     console.log('Identity loader data:', identityData);
     console.log('Accounts loader data:', accountsData);
+    console.log('Transactions loader data:', transactionsData);
     
-    // Log loader state
-    console.log('Identity loader has data:', identityLoader.has());
-    console.log('Accounts loader has data:', accountsLoader.has());
-  }, [identityData, accountsData]);
-  
-  if (!import.meta.env.VITE_FORCE_DEBUG) {
-    return null;
-  }
+    // Log transaction details if available
+    if (transactionsData && transactionsData.length > 0) {
+      console.log('First transaction raw data:', transactionsData[0]);
+    }
+  }, [identityData, accountsData, transactionsData]);
   
   return (
-    <div className="fixed top-20 right-4 max-w-md z-50">
-      <div 
-        className="rounded-lg p-4 shadow-xl"
-        style={{ backgroundColor: colors.background2 }}
-      >
-        <h3 className="font-bold mb-2" style={{ color: colors.text1 }}>
-          Data Loader Debug
-        </h3>
-        
-        <div className="space-y-2 text-xs">
+    <DebugPanel title="Data Loader Debug" position="top-right">
+      <div className="space-y-2 text-xs">
           <div>
             <span style={{ color: colors.text2 }}>Identity Loader: </span>
             <span style={{ color: identityData ? '#10b981' : '#ef4444' }}>
@@ -73,17 +86,34 @@ export const DataLoaderDebug: React.FC = () => {
           <div>
             <span style={{ color: colors.text2 }}>Accounts Loader: </span>
             <span style={{ color: accountsData ? '#10b981' : '#ef4444' }}>
-              {accountsData ? 'Has Data' : 'No Data'}
+              {accountsData ? `Has Data (${accountsData.length})` : 'No Data'}
             </span>
           </div>
           
-          <button
-            onClick={testDirectQuery}
-            disabled={loading}
-            className="mt-2 px-3 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600 disabled:opacity-50"
-          >
-            {loading ? 'Testing...' : 'Test Direct Query'}
-          </button>
+          <div>
+            <span style={{ color: colors.text2 }}>Transactions Loader: </span>
+            <span style={{ color: transactionsData ? '#10b981' : '#ef4444' }}>
+              {transactionsData ? `Has Data (${transactionsData.length})` : 'No Data'}
+            </span>
+          </div>
+          
+          <div className="flex gap-2">
+            <button
+              onClick={testDirectQuery}
+              disabled={loading}
+              className="mt-2 px-3 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600 disabled:opacity-50"
+            >
+              {loading ? 'Testing...' : 'Test Identity'}
+            </button>
+            
+            <button
+              onClick={testTransactionsQuery}
+              disabled={loading}
+              className="mt-2 px-3 py-1 bg-purple-500 text-white rounded text-xs hover:bg-purple-600 disabled:opacity-50"
+            >
+              {loading ? 'Testing...' : 'Test Transactions'}
+            </button>
+          </div>
           
           {error && (
             <div className="mt-2 p-2 bg-red-100 text-red-700 rounded text-xs">
@@ -114,7 +144,6 @@ export const DataLoaderDebug: React.FC = () => {
             </div>
           </details>
         </div>
-      </div>
-    </div>
+    </DebugPanel>
   );
 };

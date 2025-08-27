@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Send, UserPlus, AlertCircle } from 'lucide-react';
 import { useMutation } from '@apollo/client';
@@ -6,11 +6,12 @@ import { mutationCreateExternalTransfer } from '../api/mutations';
 import { useAccounts, useBalances, useBeneficiaries, useCurrencies } from '../api/client';
 import { validateTransfer, formatCurrency } from '../utils/validation';
 import { LoadingSpinner, LoadingOverlay } from '../components/LoadingSpinner';
-import { notificationManager } from '../components/Notification';
+import { notificationManager } from '../utils/notificationManager';
 import { useTheme } from '../context/ThemeContext';
 import { mockAccounts } from '../data/mockAccounts';
 import { mockCurrencyBalances } from '../data/mockBalances';
-import type { Account, CurrencyBalance, Beneficiary } from '../types';
+import type { Beneficiary } from '../types';
+import { TransferPageDebug } from '../components/TransferPageDebug';
 
 export const TransferPage: React.FC = () => {
   const navigate = useNavigate();
@@ -20,6 +21,11 @@ export const TransferPage: React.FC = () => {
   const { data: accounts, loading: accountsLoading } = useAccounts();
   const { data: beneficiaries, loading: beneficiariesLoading } = useBeneficiaries();
   const { data: currencies = [] } = useCurrencies();
+  
+  // Debug logging
+  console.log('TransferPage - Accounts:', accounts);
+  console.log('TransferPage - Beneficiaries:', beneficiaries);
+  console.log('TransferPage - Currencies:', currencies);
   
   // Use accounts from API or fall back to mock data
   const allAccounts = accounts.length > 0 ? accounts : mockAccounts;
@@ -130,6 +136,7 @@ export const TransferPage: React.FC = () => {
   
   return (
     <div className="min-h-screen pb-20 lg:pb-0" style={{ backgroundColor: colors.background1 }}>
+      <TransferPageDebug />
       <div className="sticky top-0 z-10 backdrop-blur-md" style={{ backgroundColor: `${colors.background2}CC` }}>
         <div className="flex items-center justify-between p-4 border-b" style={{ borderColor: colors.border }}>
           <div className="flex items-center">

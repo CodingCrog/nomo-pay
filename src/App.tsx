@@ -18,6 +18,10 @@ import { ConnectionStatus } from './components/ConnectionStatus';
 import { DebugDataView } from './components/DebugDataView';
 import { DataLoaderDebug } from './components/DataLoaderDebug';
 import { NotificationContainer } from './components/Notification';
+import { TransactionDebug } from './components/TransactionDebug';
+import { QueryTester } from './components/QueryTester';
+import { DebugControl } from './components/debug/DebugControl';
+import { TransactionTypeDebug } from './components/TransactionTypeDebug';
 
 function App() {
   const { colors, colorMode } = useTheme();
@@ -25,6 +29,9 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen transition-colors duration-300 relative" style={{ backgroundColor: colors.background1 }}>
+        {/* Debug Control */}
+        <DebugControl />
+        
         {/* Notifications */}
         <NotificationContainer />
         
@@ -36,6 +43,15 @@ function App() {
         
         {/* Data Loader Debug */}
         <DataLoaderDebug />
+        
+        {/* Transaction Debug */}
+        <TransactionDebug />
+        
+        {/* Transaction Type Debug */}
+        <TransactionTypeDebug />
+        
+        {/* Query Tester */}
+        <QueryTester />
         
         {/* Global background pattern */}
         <div 

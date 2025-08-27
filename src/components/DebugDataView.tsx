@@ -4,6 +4,7 @@ import { useDataContext } from '../context/DataProvider';
 import { useIdentity } from '../hooks/useIdentity';
 import { useAccounts, useBalances, useTransactions, useCurrencies, useBeneficiaries } from '../hooks/useApiData';
 import { useNomoConnected } from 'nsw-frontend-core-lib';
+import { DebugPanel } from './debug/DebugPanel';
 
 export const DebugDataView: React.FC = () => {
   const { colors } = useTheme();
@@ -18,22 +19,9 @@ export const DebugDataView: React.FC = () => {
   const { data: currencies } = useCurrencies();
   const { data: beneficiaries } = useBeneficiaries();
   
-  // Only show in debug mode
-  if (!import.meta.env.VITE_FORCE_DEBUG) {
-    return null;
-  }
-  
   return (
-    <div className="fixed bottom-20 right-4 max-w-md max-h-96 overflow-auto z-50">
-      <div 
-        className="rounded-lg p-4 shadow-xl"
-        style={{ backgroundColor: colors.background2 }}
-      >
-        <h3 className="font-bold mb-2" style={{ color: colors.text1 }}>
-          Debug Data View
-        </h3>
-        
-        <div className="space-y-2 text-xs">
+    <DebugPanel title="Debug Data View" position="bottom-right">
+      <div className="space-y-2 text-xs">
           <div>
             <span style={{ color: colors.text2 }}>Backend Connected: </span>
             <span style={{ color: isConnected ? '#10b981' : '#ef4444' }}>
@@ -97,8 +85,7 @@ export const DebugDataView: React.FC = () => {
               }, null, 2)}
             </pre>
           </details>
-        </div>
       </div>
-    </div>
+    </DebugPanel>
   );
 };

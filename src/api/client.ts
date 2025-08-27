@@ -49,7 +49,7 @@ export class ApiClient {
         }
     }
 
-    static async getTransactions(accountId?: string): Promise<Transaction[]> {
+    static async getTransactions(_accountId?: string): Promise<Transaction[]> {
         try {
             // In real implementation, this would use the loader
             return [];

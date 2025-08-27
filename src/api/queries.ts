@@ -65,7 +65,7 @@ const gqlPropsNpaBankAccount = `
     available_balance
 `;
 
-const gqlPropsBeneficiaryAddress = `
+const _gqlPropsBeneficiaryAddress = `
     id
     created_at
     address_line1
@@ -106,7 +106,6 @@ const gqlPropsBeneficiary = `
     beneficiary_bankiban_txt
     beneficiary_bankbic_txt
     beneficiary_banksortbranchcode_txt
-    beneficiary_bankmethod_txt
     beneficiary_bankaddress_line1
     beneficiary_bankaddress_line2
     beneficiary_bankaddress_zipcode

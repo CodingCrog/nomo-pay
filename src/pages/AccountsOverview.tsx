@@ -4,7 +4,7 @@ import { CurrencyBalance } from '../components/CurrencyBalance';
 import { ActionButton } from '../components/ActionButton';
 import { TransactionItem } from '../components/TransactionItem';
 import { useAccountWithBalances, useTransactions } from '../hooks/useApiData';
-import { mockAccounts, mockCurrencyBalances, mockTransactions } from '../data/mockData';
+import { mockAccounts, mockCurrencyBalances } from '../data/mockData';
 import { 
   ArrowLeft, 
   ArrowUpRight, 
@@ -21,8 +21,8 @@ export const AccountsOverview: React.FC = () => {
   const [showOtherWallets, setShowOtherWallets] = useState(false);
 
   // Try to use real data, fall back to mock if not available
-  const { account: realAccount, balances: realBalances, loading } = useAccountWithBalances(accountId || '2');
-  const { data: realTransactions } = useTransactions(accountId || '2');
+  const { account: realAccount, balances: realBalances } = useAccountWithBalances(accountId || '2');
+  const { data: realTransactions, loading: transactionsLoading } = useTransactions(accountId);
 
   const account = realAccount || mockAccounts.find(acc => acc.id === (accountId || '2'));
   const balances = realBalances.length > 0 ? realBalances : mockCurrencyBalances.filter(bal => bal.accountId === (accountId || '2'));
@@ -162,17 +162,26 @@ export const AccountsOverview: React.FC = () => {
           </div>
           
           <div className="space-y-2">
-            {mockTransactions
-              .filter(t => t.accountId === (accountId || '2'))
-              .sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime())
-              .slice(0, 5)
-              .map((transaction) => (
-                <TransactionItem
-                  key={transaction.id}
-                  transaction={transaction}
-                  onClick={() => console.log('Transaction clicked:', transaction)}
-                />
-              ))}
+            {transactionsLoading ? (
+              <div className="text-center py-4">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto"></div>
+              </div>
+            ) : realTransactions.length > 0 ? (
+              realTransactions
+                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                .slice(0, 5)
+                .map((transaction) => (
+                  <TransactionItem
+                    key={transaction.id}
+                    transaction={transaction}
+                    onClick={() => console.log('Transaction clicked:', transaction)}
+                  />
+                ))
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                <p>No transactions yet</p>
+              </div>
+            )}
           </div>
         </section>
       </div>

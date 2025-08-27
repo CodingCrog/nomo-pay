@@ -5,7 +5,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { useAccounts } from '../api/client';
 import { useIdentity } from '../hooks/useIdentity';
 import { useTheme } from '../context/ThemeContext';
-import { notificationManager } from '../components/Notification';
+import { notificationManager } from '../utils/notificationManager';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { mockAccounts } from '../data/mockAccounts';
 import type { Account } from '../types';
@@ -124,7 +124,7 @@ export const ReceivePage: React.FC = () => {
       setCopiedField(label);
       notificationManager.success('Copied!', `${label} copied to clipboard`);
       setTimeout(() => setCopiedField(null), 2000);
-    } catch (error) {
+    } catch {
       notificationManager.error('Copy Failed', 'Unable to copy to clipboard');
     }
   };
@@ -140,8 +140,8 @@ export const ReceivePage: React.FC = () => {
           title: 'Account Details',
           text: details
         });
-      } catch (error) {
-        console.log('Share failed:', error);
+      } catch {
+        console.log('Share failed');
       }
     } else {
       // Fallback: copy all details to clipboard

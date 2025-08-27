@@ -65,13 +65,44 @@ export function adaptTransactionData(transaction: any): Transaction | null {
     if (!transaction) return null;
     
     try {
+        // Convert Unix timestamp from seconds to milliseconds
+        const dateInMs = transaction.created_at * 1000;
+        
+        // Determine transaction type based on type_txt or type_char
+        const typeTxt = transaction.type_txt?.toLowerCase() || '';
+        let transactionType: 'Funds' | 'Transfer' | 'Exchange';
+        
+        if (typeTxt.includes('deposit') || typeTxt.includes('fund')) {
+            transactionType = 'Funds';
+        } else if (typeTxt.includes('transfer') || typeTxt.includes('withdrawal')) {
+            transactionType = 'Transfer';
+        } else if (typeTxt.includes('exchange') || typeTxt.includes('conversion')) {
+            transactionType = 'Exchange';
+        } else {
+            // Fallback to type_char mapping
+            transactionType = mapTransactionType(transaction.type_char);
+        }
+        
+        // Parse amount - ensure it's always a number
+        let amount = parseFloat(transaction.request_amount || '0');
+        
+        // Deposits (Funds type) should always be positive
+        // Withdrawals and transfers should be negative  
+        if (transactionType === 'Funds') {
+            // Force deposits to be positive
+            amount = Math.abs(amount);
+        } else if (transactionType === 'Transfer' && amount > 0) {
+            // Outgoing transfers should be negative
+            amount = -Math.abs(amount);
+        }
+        
         return {
             id: transaction.id,
-            date: new Date(transaction.created_at),
+            date: new Date(dateInMs),
             description: transaction.type_txt || 'Transaction',
-            amount: parseFloat(transaction.request_amount || '0'),
+            amount: amount,
             currency: transaction.transactioncurrency?.currency_code || 'EUR',
-            type: mapTransactionType(transaction.type_char),
+            type: transactionType,
             status: mapTransactionStatus(transaction.status_txt),
             accountId: transaction.identitybankaccount?.id || '',
             reference: transaction.reference_code || undefined,
@@ -139,16 +170,19 @@ function getCurrencySymbol(code: string): string {
     return symbols[code] || code;
 }
 
-function mapTransactionType(typeChar: string): 'credit' | 'debit' | 'pending' {
+function mapTransactionType(typeChar: string): 'Funds' | 'Transfer' | 'Exchange' {
     switch (typeChar?.toUpperCase()) {
         case 'C':
         case 'D': // Deposit
-            return 'credit';
-        case 'W': // Withdrawal
+            return 'Funds';
+        case 'W': // Withdrawal  
         case 'T': // Transfer
-            return 'debit';
+            return 'Transfer';
+        case 'E': // Exchange
+            return 'Exchange';
         default:
-            return 'pending';
+            // Default to Funds for unknown types
+            return 'Funds';
     }
 }
 

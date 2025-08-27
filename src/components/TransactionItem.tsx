@@ -10,13 +10,26 @@ interface TransactionItemProps {
 
 export const TransactionItem: React.FC<TransactionItemProps> = ({ transaction, onClick }) => {
   const { colors } = useTheme();
-  const isIncoming = transaction.amount > 0;
+  
+  // Check if transaction is incoming based on type
+  // Deposits are type 'Funds' and should always show as incoming (+)
+  // All positive amounts are incoming, negative are outgoing
+  const isIncoming = transaction.type === 'Funds' || transaction.amount > 0;
   
   const getActionLabel = () => {
-    if (transaction.action === 'Claim' && transaction.recipient) {
-      return `Interagiert mit: ${transaction.recipient}`;
+    if (transaction.beneficiary) {
+      return `To: ${transaction.beneficiary.name}`;
     }
-    return transaction.remarks || transaction.action;
+    return transaction.reference || transaction.description;
+  };
+  
+  const formatDate = (date: Date) => {
+    return new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(new Date(date));
   };
 
   return (
@@ -51,7 +64,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({ transaction, o
         
         <div>
           <p className="text-sm font-medium" style={{ color: colors.foreground1 }}>
-            {transaction.action.toLowerCase()}
+            {transaction.description}
           </p>
           <p className="text-xs" style={{ color: colors.foreground3 }}>
             {getActionLabel()}
@@ -66,12 +79,19 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({ transaction, o
             color: isIncoming ? colors.primary : colors.foreground1 
           }}
         >
-          {isIncoming ? '+' : ''}{transaction.amount.toFixed(2)} {transaction.currency}
+          {isIncoming ? '+' : '-'}{Math.abs(transaction.amount).toFixed(2)} {transaction.currency}
         </p>
-        {transaction.orderStatus !== 'Completed' && (
-          <p className="text-xs" style={{ color: colors.foreground3 }}>
-            {transaction.orderStatus}
-          </p>
+        <p className="text-xs" style={{ color: colors.foreground3 }}>
+          {formatDate(transaction.date)}
+        </p>
+        {transaction.status !== 'completed' && (
+          <span className="text-xs px-2 py-1 rounded-full" 
+                style={{ 
+                  backgroundColor: transaction.status === 'pending' ? '#fbbf24' : '#ef4444',
+                  color: 'white'
+                }}>
+            {transaction.status}
+          </span>
         )}
       </div>
     </div>
