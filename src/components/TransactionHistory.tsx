@@ -144,30 +144,32 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({
         className="sticky top-0 z-20 backdrop-blur-lg"
         style={{ backgroundColor: `${colors.background1}E6` }}
       >
-        <div className="flex items-center gap-4 p-4">
-          <button
-            onClick={onBack}
-            className="p-2 rounded-lg transition-colors hover:opacity-80"
-            style={{ 
-              backgroundColor: colors.surface,
-              color: colors.foreground1
-            }}
-          >
-            <ArrowLeft size={20} />
-          </button>
-          <div>
-            <h1 className="text-lg font-semibold" style={{ color: colors.foreground1 }}>
-              Transaction History
-            </h1>
-            <p className="text-sm" style={{ color: colors.foreground3 }}>
-              {account?.name || accountName}
-            </p>
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center gap-4 p-4">
+            <button
+              onClick={onBack}
+              className="p-2 rounded-lg transition-colors hover:opacity-80"
+              style={{ 
+                backgroundColor: colors.surface,
+                color: colors.foreground1
+              }}
+            >
+              <ArrowLeft size={20} />
+            </button>
+            <div>
+              <h1 className="text-lg font-semibold" style={{ color: colors.foreground1 }}>
+                Transaction History
+              </h1>
+              <p className="text-sm" style={{ color: colors.foreground3 }}>
+                {account?.name || accountName}
+              </p>
+            </div>
           </div>
         </div>
       </div>
       
       {/* Currency Cards with Swipe */}
-      <div className="px-4 mb-4">
+      <div className="max-w-2xl mx-auto px-4 mb-4">
         <div 
           {...handlers}
           className="relative h-36 cursor-grab active:cursor-grabbing select-none"
@@ -206,92 +208,33 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({
                   {/* Currency Card */}
                   <div className="relative rounded-xl overflow-hidden h-36" 
                        style={{ 
-                         background: isGBAccount 
-                           ? `linear-gradient(135deg, ${isActive ? '#1e3c72' : '#1e3c7280'} 0%, ${isActive ? '#2a5298' : '#2a529880'} 100%)`
-                           : `linear-gradient(135deg, ${isActive ? '#d32f2f' : '#d32f2f80'} 0%, ${isActive ? '#f57c00' : '#f57c0080'} 100%)`,
                          boxShadow: isActive ? '0 6px 24px rgba(0, 0, 0, 0.25)' : '0 2px 8px rgba(0, 0, 0, 0.1)',
                          transform: `translateZ(${isActive ? '10px' : '0'})`,
                          filter: isActive ? 'none' : 'saturate(0.7)'
                        }}>
+                    {/* Background with color on desktop only */}
+                    <div className="absolute inset-0 bg-transparent md:bg-[#966B30]"></div>
                     {/* Background Pattern */}
-                    <div className="absolute inset-0 opacity-20 overflow-hidden">
-                      <svg className="w-full h-full" viewBox="0 0 400 100" preserveAspectRatio="xMidYMid slice">
-                        {isGBAccount ? (
-                          <>
-                            {/* London Eye - Centered */}
-                            <g transform="translate(200, 50) scale(0.7)">
-                              {/* Main wheel */}
-                              <circle cx="0" cy="0" r="35" stroke="white" strokeWidth="2" fill="none" opacity="0.4"/>
-                              {/* Inner circle */}
-                              <circle cx="0" cy="0" r="30" stroke="white" strokeWidth="1" fill="none" opacity="0.3"/>
-                              {/* Hub */}
-                              <circle cx="0" cy="0" r="4" fill="white" opacity="0.5"/>
-                              {/* Spokes */}
-                              <g opacity="0.3">
-                                <line x1="0" y1="0" x2="0" y2="-35" stroke="white" strokeWidth="1.5"/>
-                                <line x1="0" y1="0" x2="25" y2="-25" stroke="white" strokeWidth="1.5"/>
-                                <line x1="0" y1="0" x2="35" y2="0" stroke="white" strokeWidth="1.5"/>
-                                <line x1="0" y1="0" x2="25" y2="25" stroke="white" strokeWidth="1.5"/>
-                                <line x1="0" y1="0" x2="0" y2="35" stroke="white" strokeWidth="1.5"/>
-                                <line x1="0" y1="0" x2="-25" y2="25" stroke="white" strokeWidth="1.5"/>
-                                <line x1="0" y1="0" x2="-35" y2="0" stroke="white" strokeWidth="1.5"/>
-                                <line x1="0" y1="0" x2="-25" y2="-25" stroke="white" strokeWidth="1.5"/>
-                              </g>
-                              {/* Capsules */}
-                              <rect x="-3" y="-38" width="6" height="4" rx="1" fill="white" opacity="0.4"/>
-                              <rect x="22" y="-28" width="6" height="4" rx="1" fill="white" opacity="0.4"/>
-                              <rect x="32" y="-3" width="6" height="4" rx="1" fill="white" opacity="0.4"/>
-                              <rect x="22" y="22" width="6" height="4" rx="1" fill="white" opacity="0.4"/>
-                              <rect x="-3" y="32" width="6" height="4" rx="1" fill="white" opacity="0.4"/>
-                              <rect x="-28" y="22" width="6" height="4" rx="1" fill="white" opacity="0.4"/>
-                              <rect x="-38" y="-3" width="6" height="4" rx="1" fill="white" opacity="0.4"/>
-                              <rect x="-28" y="-28" width="6" height="4" rx="1" fill="white" opacity="0.4"/>
-                              {/* Support structure */}
-                              <line x1="0" y1="35" x2="-15" y2="50" stroke="white" strokeWidth="2" opacity="0.3"/>
-                              <line x1="0" y1="35" x2="15" y2="50" stroke="white" strokeWidth="2" opacity="0.3"/>
-                            </g>
-                          </>
-                        ) : (
-                          <>
-                            {/* Gardens by the Bay Supertrees - Centered */}
-                            <g transform="translate(200, 20) scale(1)">
-                              {/* Supertree 1 - Large */}
-                              <g transform="translate(0, 0)">
-                                {/* Trunk */}
-                                <path d="M-3,60 L-2,30 L2,30 L3,60" fill="white" opacity="0.4"/>
-                                {/* Canopy structure */}
-                                <ellipse cx="0" cy="25" rx="15" ry="8" fill="white" opacity="0.4"/>
-                                <ellipse cx="0" cy="20" rx="12" ry="6" fill="white" opacity="0.3"/>
-                                <ellipse cx="0" cy="15" rx="8" ry="4" fill="white" opacity="0.3"/>
-                                {/* Branch details */}
-                                <path d="M0,30 L-10,25 M0,30 L10,25 M0,28 L-8,23 M0,28 L8,23" stroke="white" strokeWidth="0.5" opacity="0.3"/>
-                                {/* Garden elements */}
-                                <circle cx="-8" cy="22" r="2" fill="white" opacity="0.2"/>
-                                <circle cx="8" cy="22" r="2" fill="white" opacity="0.2"/>
-                                <circle cx="0" cy="18" r="2" fill="white" opacity="0.2"/>
-                              </g>
-                            </g>
-                          </>
-                        )}
-                      </svg>
+                    <div className="absolute inset-0 overflow-hidden">
+                      <img 
+                        src={isGBAccount ? "/images/london_image.png" : "/images/singa_image.png"}
+                        alt={isGBAccount ? "London" : "Singapore"} 
+                        className="w-full h-full object-cover md:object-contain"
+                        style={{ objectPosition: 'center 20%' }}
+                      />
                     </div>
-                    <div className="relative z-10 h-full flex flex-col justify-center px-6">
+                    <div className="relative z-10 h-full flex flex-col justify-end px-6 pb-4">
                       <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <h3 className="text-xl font-bold text-white font-heading">
-                            {isGBAccount ? 'London' : 'Singapore'}
-                          </h3>
-                          <div className="mt-2">
-                            <p className="text-2xl font-semibold text-white">
-                              {balance.currency.symbol}{balance.balance.toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                            </p>
-                            <p className="text-sm text-white/60 mt-1">
-                              {balance.currency.name}
-                            </p>
-                          </div>
+                        <div className="flex items-baseline gap-2">
+                          <p className="text-2xl font-semibold text-white">
+                            {balance.currency.symbol}{balance.balance.toLocaleString('en-US', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
+                          </p>
+                          <p className="text-sm text-white/80">
+                            {balance.currency.name}
+                          </p>
                         </div>
                         <div className="ml-4">
                           <span className="text-4xl">
@@ -328,7 +271,7 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({
       </div>
       
       {/* Action Buttons */}
-      <div className="px-4 mb-6">
+      <div className="max-w-2xl mx-auto px-4 mb-6">
         <div className="grid grid-cols-2 gap-3">
           {isGBAccount ? (
             <>
@@ -397,7 +340,7 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({
       </div>
       
       {/* Transaction List */}
-      <div className="px-4 pb-4 relative z-10">
+      <div className="max-w-2xl mx-auto px-4 pb-4 relative z-10">
         {Object.entries(groupedTransactions).length > 0 ? (
           Object.entries(groupedTransactions).map(([dateKey, dayTransactions]) => (
             <div key={dateKey} className="mb-6">
