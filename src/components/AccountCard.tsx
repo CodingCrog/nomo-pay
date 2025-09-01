@@ -84,18 +84,34 @@ export const AccountCard: React.FC<AccountCardProps> = ({ account, onClick }) =>
       }}
       className="relative p-6 rounded-2xl overflow-hidden cursor-pointer transform transition-all duration-300 hover:shadow-2xl shadow-xl"
       style={{
-        background: `linear-gradient(135deg, ${gradientColors[0]} 0%, ${gradientColors[1]} 50%, ${gradientColors[2]} 100%)`,
+        background: isGold 
+          ? 'transparent' 
+          : `linear-gradient(135deg, ${gradientColors[0]} 0%, ${gradientColors[1]} 50%, ${gradientColors[2]} 100%)`,
         aspectRatio: '1.586', // Credit card aspect ratio
       }}
     >
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-white/20"></div>
-        <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-black/10"></div>
-      </div>
+      {/* Background image for gold card */}
+      {isGold && (
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/images/nomo_card.png" 
+            alt="Card Background" 
+            className="w-full h-full object-cover rounded-2xl"
+          />
+        </div>
+      )}
       
-      {/* Metallic shine effect */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent"></div>
+      {/* Background pattern for numbered cards */}
+      {!isGold && (
+        <>
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-white/20"></div>
+            <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-black/10"></div>
+          </div>
+          {/* Metallic shine effect for numbered cards only */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent"></div>
+        </>
+      )}
       
       <div className="relative z-10 h-full flex flex-col justify-between">
         {/* Top section */}

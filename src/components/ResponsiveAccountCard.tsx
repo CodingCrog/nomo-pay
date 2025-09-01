@@ -35,18 +35,26 @@ export const ResponsiveAccountCard: React.FC<ResponsiveAccountCardProps> = ({
         ${isDesktop ? 'hover:scale-105 hover:shadow-2xl' : 'active:scale-95'}
       `}
       style={{
-        background: 'linear-gradient(135deg, #F4C430 0%, #DAA520 50%, #B8860B 100%)',
         boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
       }}
       onClick={onClick}
     >
-      {/* Card Background Pattern & Metallic Shine */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-yellow-200/30 blur-3xl transform translate-x-32 -translate-y-32" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-orange-300/30 blur-2xl transform -translate-x-24 translate-y-24" />
+      {/* Background with brown color on left for wide screens */}
+      <div className="absolute inset-0">
+        {/* Full brown background */}
+        <div 
+          className="absolute inset-0 hidden lg:block"
+          style={{ backgroundColor: '#574123' }}
+        />
+        {/* Card image - full on mobile, right-aligned on desktop */}
+        <div className="absolute inset-0 lg:left-1/3">
+          <img 
+            src="/images/nomo_card.png" 
+            alt="Card Background" 
+            className="w-full h-full object-cover"
+          />
+        </div>
       </div>
-      {/* Metallic shine overlay */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-yellow-100/20 to-transparent"></div>
 
 
       {/* Content */}
@@ -55,28 +63,28 @@ export const ResponsiveAccountCard: React.FC<ResponsiveAccountCardProps> = ({
         <div className="flex justify-between items-start mb-auto">
           <div className="flex items-center gap-3">
             {/* EMV Chip */}
-            <div className="w-10 h-8 rounded bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-400 border border-yellow-500/30">
+            <div className="w-10 h-8 rounded bg-gradient-to-br from-[#C89565] via-[#A5773A] to-[#8B6330] border border-[#A5773A]/40">
               <div className="w-full h-full rounded grid grid-cols-3 grid-rows-3 gap-px p-1">
-                <div className="bg-yellow-400/50 rounded-sm"></div>
-                <div className="bg-yellow-400/50 rounded-sm"></div>
-                <div className="bg-yellow-400/50 rounded-sm"></div>
-                <div className="bg-yellow-400/50 rounded-sm"></div>
-                <div className="bg-yellow-400/50 rounded-sm"></div>
-                <div className="bg-yellow-400/50 rounded-sm"></div>
-                <div className="bg-yellow-400/50 rounded-sm"></div>
-                <div className="bg-yellow-400/50 rounded-sm"></div>
-                <div className="bg-yellow-400/50 rounded-sm"></div>
+                <div className="bg-[#B8925F] rounded-sm"></div>
+                <div className="bg-[#B8925F] rounded-sm"></div>
+                <div className="bg-[#B8925F] rounded-sm"></div>
+                <div className="bg-[#B8925F] rounded-sm"></div>
+                <div className="bg-[#B8925F] rounded-sm"></div>
+                <div className="bg-[#B8925F] rounded-sm"></div>
+                <div className="bg-[#B8925F] rounded-sm"></div>
+                <div className="bg-[#B8925F] rounded-sm"></div>
+                <div className="bg-[#B8925F] rounded-sm"></div>
               </div>
             </div>
             {/* Contactless Icon */}
-            <Wifi className="w-5 h-5 text-gray-800/60 rotate-90" />
+            <Wifi className="w-5 h-5 text-white/70 rotate-90" />
           </div>
           
           <div className="text-right">
-            <p className="text-gray-800/80 text-xs font-bold uppercase tracking-wider">
+            <p className="text-white/90 text-xs font-bold uppercase tracking-wider">
               NOMOPAY
             </p>
-            <p className="text-gray-700/60 text-xs font-medium">
+            <p className="text-white/70 text-xs font-medium">
               GOLD
             </p>
           </div>
@@ -85,7 +93,7 @@ export const ResponsiveAccountCard: React.FC<ResponsiveAccountCardProps> = ({
         {/* Middle Section - Cardholder info */}
         <div className="flex-1 flex flex-col justify-center">
           <div className="space-y-1">
-            <p className="text-gray-700/60 text-[10px] uppercase tracking-wider">
+            <p className="text-white/70 text-[10px] uppercase tracking-wider">
               Card Holder
             </p>
             <p className="text-white text-sm font-semibold uppercase font-heading">
@@ -97,7 +105,7 @@ export const ResponsiveAccountCard: React.FC<ResponsiveAccountCardProps> = ({
         {/* Bottom Section - Balance and Valid Thru */}
         <div className="flex justify-between items-end">
           <div>
-            <p className="text-gray-700/60 text-[10px] uppercase tracking-wider">
+            <p className="text-white/70 text-[10px] uppercase tracking-wider">
               Balance
             </p>
             <p className="text-white text-xl sm:text-2xl font-bold font-heading">
@@ -106,7 +114,7 @@ export const ResponsiveAccountCard: React.FC<ResponsiveAccountCardProps> = ({
           </div>
           
           <div className="text-right">
-            <p className="text-gray-700/60 text-[10px] uppercase tracking-wider">
+            <p className="text-white/70 text-[10px] uppercase tracking-wider">
               Valid Thru
             </p>
             <p className="text-white text-sm font-semibold">

@@ -212,16 +212,22 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({
                          transform: `translateZ(${isActive ? '10px' : '0'})`,
                          filter: isActive ? 'none' : 'saturate(0.7)'
                        }}>
-                    {/* Background with color on desktop only */}
-                    <div className="absolute inset-0 bg-transparent md:bg-[#966B30]"></div>
-                    {/* Background Pattern */}
-                    <div className="absolute inset-0 overflow-hidden">
-                      <img 
-                        src={isGBAccount ? "/images/london_image.png" : "/images/singa_image.png"}
-                        alt={isGBAccount ? "London" : "Singapore"} 
-                        className="w-full h-full object-cover md:object-contain"
-                        style={{ objectPosition: 'center 20%' }}
+                    {/* Background with brown color for wide screens */}
+                    <div className="absolute inset-0">
+                      {/* Full brown background on desktop */}
+                      <div 
+                        className="absolute inset-0 hidden lg:block"
+                        style={{ backgroundColor: '#966B30' }}
                       />
+                      {/* Image - full on mobile, right-aligned on desktop */}
+                      <div className="absolute inset-0 lg:left-1/3">
+                        <img 
+                          src={isGBAccount ? "/images/london_image.png" : "/images/singa_image.png"}
+                          alt={isGBAccount ? "London" : "Singapore"} 
+                          className="w-full h-full object-cover"
+                          style={{ objectPosition: 'center 20%' }}
+                        />
+                      </div>
                     </div>
                     <div className="relative z-10 h-full flex flex-col justify-end px-6 pb-4">
                       <div className="flex items-center justify-between">

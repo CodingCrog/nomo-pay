@@ -71,27 +71,37 @@ export const DesktopSidebar: React.FC = () => {
     >
       {/* Header */}
       <div className="p-4 border-b flex items-center justify-between" style={{ borderBottomColor: colors.surface }}>
-        {!isCollapsed && (
-          <div className="flex items-center gap-3">
-            <div 
-              className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white"
-              style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)' }}
-            >
-              NP
-            </div>
+        <div className="flex items-center gap-3">
+          <img 
+            src="/images/nomo.png"
+            alt="NomoPay" 
+            className={isCollapsed ? "w-10 h-10 object-contain mx-auto" : "w-10 h-10 object-contain"}
+          />
+          {!isCollapsed && (
             <div>
               <h2 className="font-bold text-lg" style={{ color: colors.foreground1 }}>NomoPay</h2>
               <p className="text-xs" style={{ color: colors.foreground3 }}>Banking made simple</p>
             </div>
-          </div>
+          )}
+        </div>
+        {!isCollapsed && (
+          <button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="p-2 rounded-lg hover:bg-opacity-10 transition-colors"
+            style={{ color: colors.foreground2 }}
+          >
+            <ChevronLeft size={20} />
+          </button>
         )}
-        <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="p-2 rounded-lg hover:bg-opacity-10 transition-colors"
-          style={{ color: colors.foreground2 }}
-        >
-          {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-        </button>
+        {isCollapsed && (
+          <button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="p-2 rounded-lg hover:bg-opacity-10 transition-colors absolute right-2"
+            style={{ color: colors.foreground2 }}
+          >
+            <ChevronRight size={20} />
+          </button>
+        )}
       </div>
       
       {/* Navigation */}

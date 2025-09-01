@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { socket, onEvent, offEvent, useNomoConnected, isNomoConnected } from 'nsw-frontend-core-lib';
 import { isFallbackModeActive } from 'nomo-webon-kit';
-import '../api/loaders'; // Initialize all loaders
+import '../api/loaders';// Import the initialization function
 import { QRAuth } from '../components/QRAuth';
 
 interface DataContextValue {
@@ -32,7 +32,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const is_nomo_connected = useNomoConnected();
 
   useEffect(() => {
-    // Listen for Nomo authentication
+      // Listen for Nomo authentication
     const handleNomoAuth = () => {
       console.log('Nomo authentication successful');
       setIsNomoAuthenticated(true);
