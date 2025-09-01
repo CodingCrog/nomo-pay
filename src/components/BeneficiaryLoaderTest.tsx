@@ -9,7 +9,7 @@ export const BeneficiaryLoaderTest: React.FC = () => {
   console.log('BeneficiaryLoaderTest - Data from loader:', beneficiariesFromLoader);
   
   return (
-    <DebugPanel title="Beneficiary Loader Test" position="right">
+    <DebugPanel title="Beneficiary Loader Test" position="top-right">
       <div className="space-y-2 text-xs">
         <div className="font-semibold">Direct Loader Test</div>
         <div>Type: {typeof beneficiariesFromLoader}</div>

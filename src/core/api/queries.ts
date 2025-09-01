@@ -65,18 +65,19 @@ const gqlPropsNpaBankAccount = `
     available_balance
 `;
 
-const _gqlPropsBeneficiaryAddress = `
-    id
-    created_at
-    address_line1
-    address_line2
-    address_country_code
-    address_city
-    address_state
-    address_zipcode
-    is_current
-    beneficiary_id
-`;
+// Commented out - not currently used but may be needed later
+// const _gqlPropsBeneficiaryAddress = `
+//     id
+//     created_at
+//     address_line1
+//     address_line2
+//     address_country_code
+//     address_city
+//     address_state
+//     address_zipcode
+//     is_current
+//     beneficiary_id
+// `;
 
 const gqlPropsBeneficiary = `
     id

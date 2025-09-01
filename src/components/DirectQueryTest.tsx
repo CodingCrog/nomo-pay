@@ -48,7 +48,7 @@ export const DirectQueryTest: React.FC = () => {
   }, []);
   
   return (
-    <DebugPanel title="Direct Query Test" position="bottom-center">
+    <DebugPanel title="Direct Query Test" position="bottom-left">
       <div className="space-y-2 text-xs">
         <div>
           <div className="font-semibold">Simple Query Result:</div>

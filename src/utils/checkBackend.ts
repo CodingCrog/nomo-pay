@@ -1,8 +1,8 @@
 // Quick utility to check backend connection issues
-export function checkBackendStatus() {
+export async function checkBackendStatus() {
   // Check if nsw-frontend-core-lib is loaded
   try {
-    const lib = require('nsw-frontend-core-lib');
+    const lib = await import('nsw-frontend-core-lib');
     console.log('✅ nsw-frontend-core-lib loaded:', lib);
   } catch (error) {
     console.error('❌ Failed to load nsw-frontend-core-lib:', error);

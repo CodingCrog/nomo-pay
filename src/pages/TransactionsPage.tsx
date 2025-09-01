@@ -6,7 +6,7 @@ import { TransactionItem } from '../components/TransactionItem';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { useTheme } from '../context/ThemeContext';
 import { formatCurrency } from '../utils/validation';
-import type { Transaction } from '../types';
+import type { Transaction, Account } from '../types';
 
 export const TransactionsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -107,7 +107,7 @@ export const TransactionsPage: React.FC = () => {
           {/* Search Bar */}
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" 
-                   style={{ color: colors.text3 }} />
+                   style={{ color: colors.text2 }} />
             <input
               type="text"
               placeholder="Search transactions..."
@@ -135,7 +135,7 @@ export const TransactionsPage: React.FC = () => {
               }}
             >
               <option value="all">All Accounts</option>
-              {accounts.map(acc => (
+              {accounts.map((acc: Account) => (
                 <option key={acc.id} value={acc.id}>{acc.name}</option>
               ))}
             </select>

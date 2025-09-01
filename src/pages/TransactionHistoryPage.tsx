@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { TransactionHistory } from '../components/TransactionHistory';
 import { useTransactions } from '../core/api/client';
 import { LoadingSpinner } from '../components/LoadingSpinner';
+import type { Transaction } from '../types';
 
 export const TransactionHistoryPage: React.FC = () => {
   const { accountId, currencyCode } = useParams<{ accountId: string; currencyCode: string }>();
@@ -26,7 +27,7 @@ export const TransactionHistoryPage: React.FC = () => {
   
   // Filter transactions by currency if specified
   const filteredTransactions = currencyCode 
-    ? transactions.filter(t => t.currency === currencyCode)
+    ? transactions.filter((t: Transaction) => t.currency === currencyCode)
     : transactions;
   
   console.log('- Filtered transactions:', filteredTransactions);

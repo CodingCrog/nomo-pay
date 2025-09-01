@@ -7,7 +7,7 @@ import { useIdentity } from '../hooks/useIdentity';
 import { useTheme } from '../context/ThemeContext';
 import { notificationManager } from '../utils/notificationManager';
 import { LoadingSpinner } from '../components/LoadingSpinner';
-import type { Account } from '../types';
+import type { Account, Currency } from '../types';
 
 interface AccountDetails {
   label: string;
@@ -29,7 +29,7 @@ export const ReceivePage: React.FC = () => {
   const [showQRCode, setShowQRCode] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   
-  const selectedAccount = allAccounts.find(a => a.id === selectedAccountId);
+  const selectedAccount = allAccounts.find((a: Account) => a.id === selectedAccountId);
   
   // Mock account details - in production, these would come from the backend
   const getAccountDetails = (account: Account | undefined): AccountDetails[] => {
@@ -130,7 +130,7 @@ export const ReceivePage: React.FC = () => {
   
   const handleShare = async () => {
     const details = accountDetails
-      .map(d => `${d.label}: ${d.value}`)
+      .map((d: AccountDetails) => `${d.label}: ${d.value}`)
       .join('\n');
     
     if (navigator.share) {
@@ -150,8 +150,8 @@ export const ReceivePage: React.FC = () => {
   
   const generateQRData = () => {
     const details = accountDetails
-      .filter(d => d.copyable)
-      .map(d => `${d.label}: ${d.value}`)
+      .filter((d: AccountDetails) => d.copyable)
+      .map((d: AccountDetails) => `${d.label}: ${d.value}`)
       .join('\n');
     return details;
   };
@@ -224,7 +224,7 @@ export const ReceivePage: React.FC = () => {
                 color: colors.text1
               }}
             >
-              {allAccounts.map(account => (
+              {allAccounts.map((account: Account) => (
                 <option key={account.id} value={account.id}>
                   {account.name} - {account.accountNumber}
                 </option>
@@ -303,7 +303,7 @@ export const ReceivePage: React.FC = () => {
               </h3>
             </div>
             <div className="p-4 space-y-4">
-              {accountDetails.map((detail, index) => (
+              {accountDetails.map((detail: AccountDetails, index: number) => (
                 <div key={index}>
                   <label className="text-sm" style={{ color: colors.text2 }}>
                     {detail.label}
@@ -355,7 +355,7 @@ export const ReceivePage: React.FC = () => {
                 Supported Currencies
               </h4>
               <div className="flex flex-wrap gap-2">
-                {selectedAccount.availableCurrencies.map(currency => (
+                {selectedAccount.availableCurrencies.map((currency: Currency) => (
                   <span
                     key={currency.code}
                     className="px-3 py-1 rounded-full text-sm"

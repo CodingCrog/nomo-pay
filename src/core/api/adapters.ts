@@ -36,7 +36,8 @@ export function adaptBankAccountToAccount(bankAccount: any): Account | null {
                 code: bankAccount.transactioncurrency.currency_code,
                 name: bankAccount.transactioncurrency.currency_txt,
                 symbol: getCurrencySymbol(bankAccount.transactioncurrency.currency_code),
-                decimal: 2
+                balance: 0,
+                exchangeRate: 1
             }] : [],
             chartData: {
                 labels: [],
@@ -164,7 +165,7 @@ export function adaptCurrencyData(currency: any): CurrencyInfo | null {
             code: currency.currency_code,
             name: currency.currency_txt,
             symbol: getCurrencySymbol(currency.currency_code),
-            decimals: 2
+            decimal: 2
         };
     } catch (error) {
         console.error('Error adapting currency:', error, currency);
@@ -178,9 +179,7 @@ export function adaptBeneficiaryData(beneficiary: any): SimpleBeneficiary | null
     try {
         return {
             id: beneficiary.id,
-            firstName: beneficiary.firstname_txt || beneficiary.accountholder_txt?.split(' ')[0] || '',
-            lastname: beneficiary.lastname_txt || beneficiary.accountholder_txt?.split(' ').slice(1).join(' ') || '',
-            email: beneficiary.email_txt || '',
+            name: `${beneficiary.firstname_txt || ''} ${beneficiary.lastname_txt || ''}`.trim() || beneficiary.accountholder_txt || '',
             bankName: beneficiary.beneficiary_bankname_txt || beneficiary.regular_bankname_txt || '',
             accountNumber: beneficiary.beneficiary_bankaccountnumber_txt || beneficiary.accountnumber_txt || '',
             iban: beneficiary.beneficiary_bankiban_txt || '',

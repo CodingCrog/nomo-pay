@@ -17,7 +17,10 @@ export const QRAuth: React.FC = () => {
     );
   }
 
-  const qr_backend_url = import.meta.env.VITE_QR_BACKEND_URL ?? import.meta.env.VITE_BACKEND_URL;
+  // For production, the QR auth should point to a production backend
+  // This needs to be configured based on your actual backend deployment
+  // For now, we'll use a placeholder that needs to be updated when you have a production backend
+  const qr_backend_url = import.meta.env.VITE_QR_BACKEND_URL ?? 'https://api.nomopay.com'; // Update this with your actual production backend
   const is_https = qr_backend_url?.includes('https://');
   const backend_base_url = qr_backend_url?.includes('https://') 
     ? qr_backend_url.split('https://')?.[1] 

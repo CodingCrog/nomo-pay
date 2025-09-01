@@ -14,7 +14,7 @@ export class TransactionService {
    */
   static async getAccountTransactions(accountId: string): Promise<Transaction[]> {
     const transactions = await ApiClient.getTransactions(accountId);
-    return transactions.sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
+    return transactions.sort((a, b) => new Date(b.date || b.orderDate || 0).getTime() - new Date(a.date || a.orderDate || 0).getTime());
   }
 
   /**
@@ -27,7 +27,7 @@ export class TransactionService {
     const transactions = await ApiClient.getTransactions(accountId);
     return transactions
       .filter(t => t.currency === currencyCode)
-      .sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
+      .sort((a, b) => new Date(b.date || b.orderDate || 0).getTime() - new Date(a.date || a.orderDate || 0).getTime());
   }
 
   /**
@@ -51,7 +51,7 @@ export class TransactionService {
   ): Promise<Transaction[]> {
     const transactions = await this.getAccountTransactions(accountId);
     return transactions.filter(t => {
-      const transactionDate = new Date(t.orderDate);
+      const transactionDate = new Date(t.date || t.orderDate || 0);
       return transactionDate >= startDate && transactionDate <= endDate;
     });
   }

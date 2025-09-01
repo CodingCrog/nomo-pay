@@ -90,7 +90,9 @@ class NotificationManager {
 
   subscribe(callback: (notification: NotificationData) => void) {
     this.listeners.add(callback);
-    return () => this.listeners.delete(callback);
+    return () => {
+      this.listeners.delete(callback);
+    };
   }
 
   show(type: NotificationType, title: string, message?: string, duration?: number) {

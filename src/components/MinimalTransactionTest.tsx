@@ -81,7 +81,7 @@ export const MinimalTransactionTest: React.FC = () => {
   };
 
   return (
-    <DebugPanel title="Minimal Transaction Test" position="center">
+    <DebugPanel title="Minimal Transaction Test" position="top-left">
       <div className="space-y-2 text-xs">
         <h4 className="font-semibold">Test Transaction Query Step by Step</h4>
         

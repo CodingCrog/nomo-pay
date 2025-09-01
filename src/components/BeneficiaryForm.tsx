@@ -89,7 +89,7 @@ export const BeneficiaryForm: React.FC<BeneficiaryFormProps> = ({ onSave, onCanc
       <input
         id={field}
         type={type}
-        value={formData[field as keyof BeneficiaryFormData] || ''}
+        value={String(formData[field as keyof BeneficiaryFormData] || '')}
         onChange={(e) => handleChange(field, e.target.value)}
         placeholder={placeholder}
         className={`w-full px-3 py-2 border rounded-lg transition-colors ${

@@ -8,7 +8,7 @@ import { validateTransfer, formatCurrency } from '../utils/validation';
 import { LoadingSpinner, LoadingOverlay } from '../components/LoadingSpinner';
 import { notificationManager } from '../utils/notificationManager';
 import { useTheme } from '../context/ThemeContext';
-import type { SimpleBeneficiary } from '../types';
+import type { SimpleBeneficiary, Account } from '../types';
 import { TransferPageDebug } from '../components/TransferPageDebug';
 
 export const TransferPage: React.FC = () => {
@@ -43,7 +43,7 @@ export const TransferPage: React.FC = () => {
   const accountBalances = balances;
   
   // Find selected currency balance
-  const selectedBalance = accountBalances.find(b => b.currency.code === selectedCurrency);
+  const selectedBalance = accountBalances.find((b: any) => b.currency.code === selectedCurrency);
   const availableBalance = selectedBalance?.available || 0;
   
   // Mutation
@@ -58,26 +58,22 @@ export const TransferPage: React.FC = () => {
   });
   
   // Mock beneficiaries if no API data
-  const mockBeneficiaries: Beneficiary[] = [
+  const mockBeneficiaries: SimpleBeneficiary[] = [
     {
       id: '1',
-      firstname: 'John',
-      lastname: 'Doe',
-      email: 'john.doe@example.com',
-      bankName: 'Example Bank',
+      name: 'John Doe',
       accountNumber: 'GB12XXXX12345678',
       iban: 'GB12XXXX12345678',
-      swiftCode: 'EXMPGB2L'
+      swiftCode: 'EXMPGB2L',
+      bankName: 'Example Bank'
     },
     {
       id: '2',
-      firstname: 'Jane',
-      lastname: 'Smith',
-      email: 'jane.smith@example.com',
-      bankName: 'Another Bank',
+      name: 'Jane Smith',
       accountNumber: 'DE89370400440532013000',
       iban: 'DE89370400440532013000',
-      swiftCode: 'DEUTDEFF'
+      swiftCode: 'DEUTDEFF',
+      bankName: 'Another Bank'
     }
   ];
   
@@ -126,8 +122,8 @@ export const TransferPage: React.FC = () => {
     }
   };
   
-  const selectedAccount = allAccounts.find(a => a.id === selectedAccountId);
-  const selectedBeneficiary = allBeneficiaries.find(b => b.id === selectedBeneficiaryId);
+  const selectedAccount = allAccounts.find((a: Account) => a.id === selectedAccountId);
+  const selectedBeneficiary = allBeneficiaries.find((b: SimpleBeneficiary) => b.id === selectedBeneficiaryId);
   
   const isLoading = accountsLoading || beneficiariesLoading || transferLoading;
   
@@ -167,7 +163,7 @@ export const TransferPage: React.FC = () => {
                 }}
               >
                 <option value="">Select an account</option>
-                {allAccounts.map(account => (
+                {allAccounts.map((account: Account) => (
                   <option key={account.id} value={account.id}>
                     {account.name} - {account.accountNumber}
                   </option>
@@ -200,9 +196,9 @@ export const TransferPage: React.FC = () => {
                   }}
                 >
                   <option value="">Select a beneficiary</option>
-                  {allBeneficiaries.map(beneficiary => (
+                  {allBeneficiaries.map((beneficiary: SimpleBeneficiary) => (
                     <option key={beneficiary.id} value={beneficiary.id}>
-                      {beneficiary.firstname} {beneficiary.lastname} - {beneficiary.bankName}
+                      {beneficiary.name} - {beneficiary.bankName}
                     </option>
                   ))}
                 </select>
@@ -248,7 +244,7 @@ export const TransferPage: React.FC = () => {
                   }}
                 >
                   {accountBalances.length > 0 ? (
-                    accountBalances.map((balance, index) => (
+                    accountBalances.map((balance: any, index: number) => (
                       <option key={`${balance.currency.code}-${index}`} value={balance.currency.code}>
                         {balance.currency.code}
                       </option>
@@ -345,7 +341,7 @@ export const TransferPage: React.FC = () => {
                 <div className="flex justify-between">
                   <span style={{ color: colors.text2 }}>To:</span>
                   <span style={{ color: colors.text1 }}>
-                    {selectedBeneficiary?.firstname} {selectedBeneficiary?.lastname}
+                    {selectedBeneficiary?.name}
                   </span>
                 </div>
                 

@@ -8,6 +8,7 @@ import { validateDeposit, formatCurrency } from '../utils/validation';
 import { LoadingSpinner, LoadingOverlay } from '../components/LoadingSpinner';
 import { notificationManager } from '../utils/notificationManager';
 import { useTheme } from '../context/ThemeContext';
+import type { Account, CurrencyInfo } from '../types';
 
 interface PaymentMethod {
   id: string;
@@ -73,8 +74,8 @@ export const DepositPage: React.FC = () => {
   const [showInstructions, setShowInstructions] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   
-  const selectedMethod = allPaymentMethods.find(m => m.id === selectedMethodId);
-  const selectedAccount = allAccounts.find(a => a.id === selectedAccountId);
+  const selectedMethod = allPaymentMethods.find((m: PaymentMethod) => m.id === selectedMethodId);
+  const selectedAccount = allAccounts.find((a: Account) => a.id === selectedAccountId);
   
   // Mutation
   const [createDeposit, { loading: depositLoading }] = useMutation(mutationCreateDeposit, {
@@ -197,7 +198,7 @@ export const DepositPage: React.FC = () => {
                 }}
               >
                 <option value="">Select an account</option>
-                {allAccounts.map(account => (
+                {allAccounts.map((account: Account) => (
                   <option key={account.id} value={account.id}>
                     {account.name} - {account.accountNumber}
                   </option>
@@ -214,7 +215,7 @@ export const DepositPage: React.FC = () => {
                 Payment Method
               </label>
               <div className="space-y-2">
-                {allPaymentMethods.map(method => (
+                {allPaymentMethods.map((method: PaymentMethod) => (
                   <button
                     key={method.id}
                     onClick={() => setSelectedMethodId(method.id)}
@@ -286,7 +287,7 @@ export const DepositPage: React.FC = () => {
                     color: colors.text1
                   }}
                 >
-                  {allCurrencies.map(currency => (
+                  {allCurrencies.map((currency: CurrencyInfo) => (
                     <option key={currency.code} value={currency.code}>
                       {currency.code}
                     </option>

@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Transaction } from '../types';
+import type { Account } from '../types/account';
+import type { CurrencyBalance } from '../types/currency';
 import { TransactionItem } from './TransactionItem';
 import { ActionButton } from './ActionButton';
 import { useTheme } from '../context/ThemeContext';
@@ -48,17 +50,17 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({
   const { data: balances } = useBalances(accountId);
   
   // Get the current account
-  const account = accounts.find(acc => acc.id === accountId);
+  const account = accounts.find((acc: Account) => acc.id === accountId);
   const isGBAccount = account?.type === 'gb_based';
   
   // Get all currency balances for this account with non-zero balances
   const accountBalances = balances.filter(
-    (balance) => balance.balance > 0
-  ).sort((a, b) => b.balance - a.balance); // Sort by balance descending
+    (balance: CurrencyBalance) => balance.balance > 0
+  ).sort((a: CurrencyBalance, b: CurrencyBalance) => b.balance - a.balance); // Sort by balance descending
   
   // Set initial currency index based on currencyCode
   React.useEffect(() => {
-    const index = accountBalances.findIndex(b => b.currency.code === currencyCode);
+    const index = accountBalances.findIndex((b: CurrencyBalance) => b.currency.code === currencyCode);
     if (index !== -1) {
       setActiveCurrencyIndex(index);
     }
@@ -175,7 +177,7 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({
           className="relative h-36 cursor-grab active:cursor-grabbing select-none"
         >
           <AnimatePresence mode="popLayout">
-            {accountBalances.map((balance, index) => {
+            {accountBalances.map((balance: CurrencyBalance, index: number) => {
               const offset = index - activeCurrencyIndex;
               const isActive = index === activeCurrencyIndex;
               
@@ -259,7 +261,7 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({
         {/* Card Indicators */}
         {accountBalances.length > 1 && (
           <div className="flex justify-center gap-2 mt-4">
-            {accountBalances.map((_, index) => (
+            {accountBalances.map((_: CurrencyBalance, index: number) => (
               <button
                 key={index}
                 onClick={() => setActiveCurrencyIndex(index)}

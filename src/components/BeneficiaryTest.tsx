@@ -37,7 +37,7 @@ export const BeneficiaryTest: React.FC = () => {
   }, []);
   
   return (
-    <DebugPanel title="Beneficiary Test" position="left">
+    <DebugPanel title="Beneficiary Test" position="top-left">
       <div className="space-y-2 text-xs">
         <div className="font-semibold">Beneficiaries Query Test</div>
         {result ? (

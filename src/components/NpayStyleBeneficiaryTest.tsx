@@ -74,7 +74,7 @@ export const NpayStyleBeneficiaryTest: React.FC = () => {
   }
   
   return (
-    <DebugPanel title="Npay Style Test" position="top-center">
+    <DebugPanel title="Npay Style Test" position="top-left">
       <div className="space-y-2 text-xs">
         <div>
           <div className="font-semibold">Direct Query:</div>

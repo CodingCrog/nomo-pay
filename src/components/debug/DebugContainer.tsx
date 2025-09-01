@@ -125,7 +125,7 @@ export const DebugContainer: React.FC = () => {
       render: () => (
         <div className="space-y-2 text-xs">
           <div className="text-purple-400 font-semibold">Data Loader Status:</div>
-          {Object.entries(GQL_LOADERS).map(([key, value]) => (
+          {Object.entries(GQL_LOADERS).map(([key]) => (
             <div key={key} className="flex justify-between">
               <span className="text-gray-400">{key}:</span>
               <span className="text-green-400">Active</span>

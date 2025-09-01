@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { socket, onEvent, offEvent, useNomoConnected, isNomoConnected } from 'nsw-frontend-core-lib';
 import { isFallbackModeActive } from 'nomo-webon-kit';
 import '../core/api/loaders';// Import the initialization function
@@ -18,12 +17,6 @@ const DataContext = createContext<DataContextValue>({
 });
 
 export const useDataContext = () => useContext(DataContext);
-
-// Apollo Client setup (for components that need direct GraphQL access)
-const apolloClient = new ApolloClient({
-  uri: import.meta.env.VITE_BACKEND_URL || 'http://localhost:1234',
-  cache: new InMemoryCache(),
-});
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const [isConnected, setIsConnected] = useState(false);
@@ -79,10 +72,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
 
   return (
-    <ApolloProvider client={apolloClient}>
-      <DataContext.Provider value={{ isConnected, isLoading, isNomoAuthenticated }}>
-        {children}
-      </DataContext.Provider>
-    </ApolloProvider>
+    <DataContext.Provider value={{ isConnected, isLoading, isNomoAuthenticated }}>
+      {children}
+    </DataContext.Provider>
   );
 }

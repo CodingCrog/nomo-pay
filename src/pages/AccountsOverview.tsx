@@ -13,6 +13,8 @@ import {
   MoreHorizontal,
   ChevronRight
 } from 'lucide-react';
+import type { Account, Transaction } from '../types';
+import type { CurrencyBalance as CurrencyBalanceType } from '../types/currency';
 
 export const AccountsOverview: React.FC = () => {
   const navigate = useNavigate();
@@ -25,7 +27,7 @@ export const AccountsOverview: React.FC = () => {
   const currentAccountId = accountId || defaultAccountId;
   
   // Use real data from backend
-  const account = allAccounts.find(acc => acc.id === currentAccountId);
+  const account = allAccounts.find((acc: Account) => acc.id === currentAccountId);
   const { data: balances } = useBalances(currentAccountId);
   const { data: realTransactions, loading: transactionsLoading } = useTransactions(currentAccountId);
   
@@ -40,7 +42,7 @@ export const AccountsOverview: React.FC = () => {
   const mainBalances = balances.slice(0, 3);
   const otherBalances = balances.slice(3);
 
-  const totalInEUR = balances.reduce((sum, bal) => {
+  const totalInEUR = balances.reduce((sum: number, bal: CurrencyBalanceType) => {
     const rate = bal.currency.code === 'EUR' ? 1 : 
                  bal.currency.code === 'USD' ? 0.92 : 
                  bal.currency.code === 'GBP' ? 1.16 : 1;
@@ -79,7 +81,7 @@ export const AccountsOverview: React.FC = () => {
           </h2>
           
           <div className="space-y-3 mb-4">
-            {mainBalances.map((balance) => (
+            {mainBalances.map((balance: CurrencyBalanceType) => (
               <CurrencyBalance
                 key={balance.id}
                 balance={balance}
@@ -101,7 +103,7 @@ export const AccountsOverview: React.FC = () => {
               
               {showOtherWallets && (
                 <div className="space-y-3">
-                  {otherBalances.map((balance) => (
+                  {otherBalances.map((balance: CurrencyBalanceType) => (
                     <CurrencyBalance
                       key={balance.id}
                       balance={balance}
@@ -178,9 +180,9 @@ export const AccountsOverview: React.FC = () => {
               </div>
             ) : realTransactions.length > 0 ? (
               realTransactions
-                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                .sort((a: Transaction, b: Transaction) => new Date(b.date).getTime() - new Date(a.date).getTime())
                 .slice(0, 5)
-                .map((transaction) => (
+                .map((transaction: Transaction) => (
                   <TransactionItem
                     key={transaction.id}
                     transaction={transaction}
