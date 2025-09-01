@@ -18,7 +18,7 @@ export const GQL_LOADERS = {
     get_npa_identity_bankaccounts: 'nomopay_get_npa_identity_bankaccounts',
     get_npa_identity_banktransactions: 'nomopay_get_npa_identity_banktransactions',
     get_npa_currencies: 'nomopay_get_npa_currencies',
-    get_npa_beneficiaries: 'nomopay_get_npa_beneficiaries',
+    get_npa_beneficiaries: 'get_npa_beneficiaries', // Use same name as npay-fe
     get_npa_payment_methods: 'nomopay_get_npa_payment_methods',
 };
 
@@ -31,6 +31,9 @@ const SOCKET_RELOAD_MESSAGES = {
 
 // Track if loaders have been initialized to prevent duplicate registration
 let loadersInitialized = false;
+
+// Force reinitialize for beneficiaries fix
+loadersInitialized = false;
 
 console.log('Initializing NomoPay loaders...');
 
@@ -54,7 +57,15 @@ if (!loadersInitialized) {
         });
         
         defineLoader(GQL_LOADERS.get_npa_identity_banktransactions, getNpaIdentityBankTransactions, {
-            clean_fct: (data: any) => data?.npa_identity_banktransactions,
+            clean_fct: (data: any) => {
+                console.log('Transactions loader raw data received:', data);
+                const transactions = data?.npa_identity_banktransactions || 
+                                   data?.npa_banktransactions || 
+                                   data?.npa_identity?.banktransactions || 
+                                   [];
+                console.log('Cleaned transactions:', transactions);
+                return transactions;
+            },
             socket_reload_message: SOCKET_RELOAD_MESSAGES.npaidentitybanktransaction_changed,
         });
         
@@ -62,8 +73,19 @@ if (!loadersInitialized) {
             clean_fct: (data: any) => data?.npa_transactioncurrencies,
         });
         
+        // Define beneficiaries loader with both possible data structures
+        console.log('Defining beneficiaries loader with query:', getNpaBeneficiaries);
+        console.log('Query content:', getNpaBeneficiaries.loc?.source?.body);
         defineLoader(GQL_LOADERS.get_npa_beneficiaries, getNpaBeneficiaries, {
-            clean_fct: (data: any) => data?.npa_identity?.beneficiaries,
+            clean_fct: (data: any) => {
+                console.log('Beneficiaries loader data received:', data);
+                console.log('Data keys:', data ? Object.keys(data) : 'null');
+                console.log('Full data structure:', JSON.stringify(data, null, 2));
+                // Use the correct path: npa_identity.beneficiaries
+                const beneficiaries = data?.npa_identity?.beneficiaries || [];
+                console.log('Cleaned beneficiaries:', beneficiaries);
+                return beneficiaries;
+            },
             socket_reload_message: SOCKET_RELOAD_MESSAGES.npabeneficiary_changed,
         });
         

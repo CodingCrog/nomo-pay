@@ -3,8 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { CurrencyBalance } from '../components/CurrencyBalance';
 import { ActionButton } from '../components/ActionButton';
 import { TransactionItem } from '../components/TransactionItem';
-import { useAccountWithBalances, useTransactions } from '../hooks/useApiData';
-import { mockAccounts, mockCurrencyBalances } from '../data/mockData';
+import { useAccounts, useBalances, useTransactions } from '../api/client';
 import { 
   ArrowLeft, 
   ArrowUpRight, 
@@ -20,12 +19,23 @@ export const AccountsOverview: React.FC = () => {
   const { accountId } = useParams<{ accountId: string }>();
   const [showOtherWallets, setShowOtherWallets] = useState(false);
 
-  // Try to use real data, fall back to mock if not available
-  const { account: realAccount, balances: realBalances } = useAccountWithBalances(accountId || '2');
-  const { data: realTransactions, loading: transactionsLoading } = useTransactions(accountId);
-
-  const account = realAccount || mockAccounts.find(acc => acc.id === (accountId || '2'));
-  const balances = realBalances.length > 0 ? realBalances : mockCurrencyBalances.filter(bal => bal.accountId === (accountId || '2'));
+  // Get all accounts first to get a valid default ID
+  const { data: allAccounts } = useAccounts();
+  const defaultAccountId = allAccounts[0]?.id || '';
+  const currentAccountId = accountId || defaultAccountId;
+  
+  // Use real data from backend
+  const account = allAccounts.find(acc => acc.id === currentAccountId);
+  const { data: balances } = useBalances(currentAccountId);
+  const { data: realTransactions, loading: transactionsLoading } = useTransactions(currentAccountId);
+  
+  // Debug logging
+  console.log('AccountsOverview Debug:');
+  console.log('- Current Account ID:', currentAccountId);
+  console.log('- Account:', account);
+  console.log('- Balances:', balances);
+  console.log('- Transactions for this account:', realTransactions);
+  console.log('- Number of transactions:', realTransactions?.length);
   
   const mainBalances = balances.slice(0, 3);
   const otherBalances = balances.slice(3);

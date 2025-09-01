@@ -8,9 +8,7 @@ import { validateTransfer, formatCurrency } from '../utils/validation';
 import { LoadingSpinner, LoadingOverlay } from '../components/LoadingSpinner';
 import { notificationManager } from '../utils/notificationManager';
 import { useTheme } from '../context/ThemeContext';
-import { mockAccounts } from '../data/mockAccounts';
-import { mockCurrencyBalances } from '../data/mockBalances';
-import type { Beneficiary } from '../types';
+import type { SimpleBeneficiary } from '../types';
 import { TransferPageDebug } from '../components/TransferPageDebug';
 
 export const TransferPage: React.FC = () => {
@@ -27,8 +25,8 @@ export const TransferPage: React.FC = () => {
   console.log('TransferPage - Beneficiaries:', beneficiaries);
   console.log('TransferPage - Currencies:', currencies);
   
-  // Use accounts from API or fall back to mock data
-  const allAccounts = accounts.length > 0 ? accounts : mockAccounts;
+  // Use accounts from API
+  const allAccounts = accounts;
   
   // Form state
   const [selectedAccountId, setSelectedAccountId] = useState<string>('');
@@ -42,8 +40,7 @@ export const TransferPage: React.FC = () => {
   
   // Get balances for selected account
   const { data: balances } = useBalances(selectedAccountId);
-  const accountBalances = balances.length > 0 ? balances : 
-    (selectedAccountId ? mockCurrencyBalances.filter(b => b.accountId === selectedAccountId) : []);
+  const accountBalances = balances;
   
   // Find selected currency balance
   const selectedBalance = accountBalances.find(b => b.currency.code === selectedCurrency);

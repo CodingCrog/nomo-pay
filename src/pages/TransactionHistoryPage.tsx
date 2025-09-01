@@ -14,6 +14,12 @@ export const TransactionHistoryPage: React.FC = () => {
   // Use real transactions from backend
   const { data: transactions, loading } = useTransactions(accountId);
   
+  console.log('TransactionHistoryPage Debug:');
+  console.log('- Account ID from URL:', accountId);
+  console.log('- Currency Code from URL:', currencyCode);
+  console.log('- All transactions received:', transactions);
+  console.log('- Transaction count:', transactions?.length);
+  
   const handleBack = () => {
     navigate(-1);
   };
@@ -22,6 +28,9 @@ export const TransactionHistoryPage: React.FC = () => {
   const filteredTransactions = currencyCode 
     ? transactions.filter(t => t.currency === currencyCode)
     : transactions;
+  
+  console.log('- Filtered transactions:', filteredTransactions);
+  console.log('- Filtered count:', filteredTransactions?.length);
 
   if (loading) {
     return (

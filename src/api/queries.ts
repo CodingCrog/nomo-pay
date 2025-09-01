@@ -116,6 +116,18 @@ const gqlPropsBeneficiary = `
     middlename_txt
     lastname_txt
     email_txt
+    addresses {
+        id
+        created_at
+        address_line1
+        address_line2
+        address_country_code
+        address_city
+        address_state
+        address_zipcode
+        is_current
+        beneficiary_id
+    }
 `;
 
 const gqlPropsIdentityDocument = `
@@ -140,16 +152,14 @@ const gqlPropsBankTransaction = `
     type_char
     type_txt
     identitybankaccount {
-        ${gqlPropsNpaBankAccount}
+        id
+        type_char
+        balance
     }
     transactioncurrency {
-        ${gqlPropsCurrency}
-    }
-    beneficiary {
-        ${gqlPropsBeneficiary}
-    }
-    documents {
-        ${gqlPropsIdentityDocument}
+        id
+        currency_code
+        currency_name
     }
 `;
 
@@ -166,13 +176,13 @@ const gqlPropsTxMethod = `
 `;
 
 export const isLoggedIn = gql`
-    query {
+    {
         is_logged_in
     }
 `;
 
 export const getNpaIdentity = gql`
-    query {
+    {
         npa_identity {
             ${gqlPropsNpaIdentity}
         }
@@ -180,7 +190,7 @@ export const getNpaIdentity = gql`
 `;
 
 export const getNpaIdentityBankAccounts = gql`
-    query {
+    {
         npa_identity_bankaccounts {
             ${gqlPropsNpaBankAccount}
         }
@@ -188,7 +198,7 @@ export const getNpaIdentityBankAccounts = gql`
 `;
 
 export const getNpaIdentityBankTransactions = gql`
-    query {
+    {
         npa_identity_banktransactions {
             ${gqlPropsBankTransaction}
         }
@@ -196,7 +206,7 @@ export const getNpaIdentityBankTransactions = gql`
 `;
 
 export const getNpaTransactionCurrencies = gql`
-    query {
+    {
         npa_transactioncurrencies {
             ${gqlPropsCurrency}
         }
@@ -204,7 +214,7 @@ export const getNpaTransactionCurrencies = gql`
 `;
 
 export const getNpaTransactionMethods = gql`
-    query {
+    {
         npa_transactionmethods {
             ${gqlPropsTxMethod}
         }
@@ -212,7 +222,7 @@ export const getNpaTransactionMethods = gql`
 `;
 
 export const getNpaBeneficiaries = gql`
-    query {
+    {
         npa_identity {
             beneficiaries {
                 ${gqlPropsBeneficiary}
@@ -221,14 +231,23 @@ export const getNpaBeneficiaries = gql`
     }
 `;
 
+// Alternative direct query for beneficiaries if available
+export const getNpaBeneficiariesDirect = gql`
+    {
+        npa_beneficiaries {
+            ${gqlPropsBeneficiary}
+        }
+    }
+`;
+
 export const getUserSettings = gql`
-    query {
+    {
         user_settings
     }
 `;
 
 export const getVerifiedEmails = gql`
-    query {
+    {
         nomo_me {
             verified_emails
         }
@@ -236,7 +255,7 @@ export const getVerifiedEmails = gql`
 `;
 
 export const getClaimableIdentities = gql`
-    query {
+    {
         claimable_identities {
             ${gqlPropsNpaIdentity}
         }

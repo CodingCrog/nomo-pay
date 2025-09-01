@@ -22,7 +22,7 @@ export interface Transaction {
   metadata?: Record<string, unknown>;
 }
 
-export interface Beneficiary {
+export interface SimpleBeneficiary {
   id: string;
   name: string;
   accountNumber?: string;

@@ -1,11 +1,24 @@
-import type { Account, CurrencyBalance, Transaction, CurrencyInfo, Beneficiary } from '../types';
+import type { Account, CurrencyBalance, Transaction, CurrencyInfo, SimpleBeneficiary } from '../types';
 
 export function adaptBankAccountToAccount(bankAccount: any): Account | null {
-    if (!bankAccount) return null;
+    if (!bankAccount) {
+        console.log('adaptBankAccountToAccount - No bank account provided');
+        return null;
+    }
+    
+    console.log('adaptBankAccountToAccount - Raw bank account:', bankAccount);
     
     try {
-        // Determine account type based on type_char
-        const accountType = bankAccount.type_char === 'N' ? 'numbered' : 'gb_based';
+        // Determine account type based on type_char or account index
+        // Check different possible fields for account type
+        let accountType: 'numbered' | 'gb_based' = 'gb_based';
+        
+        if (bankAccount.type_char === 'N' || 
+            bankAccount.accounttype_char === 'N' ||
+            bankAccount.account_type === 'numbered' ||
+            bankAccount.name?.toLowerCase().includes('numbered')) {
+            accountType = 'numbered';
+        }
         
         // Generate account number based on type
         const accountNumber = accountType === 'numbered' 
@@ -64,6 +77,14 @@ export function adaptBankAccountToBalance(bankAccount: any): CurrencyBalance | n
 export function adaptTransactionData(transaction: any): Transaction | null {
     if (!transaction) return null;
     
+    console.log('adaptTransactionData - Raw transaction:', {
+        id: transaction.id,
+        identitybankaccount: transaction.identitybankaccount,
+        transactioncurrency: transaction.transactioncurrency,
+        type_txt: transaction.type_txt,
+        request_amount: transaction.request_amount
+    });
+    
     try {
         // Convert Unix timestamp from seconds to milliseconds
         const dateInMs = transaction.created_at * 1000;
@@ -96,12 +117,12 @@ export function adaptTransactionData(transaction: any): Transaction | null {
             amount = -Math.abs(amount);
         }
         
-        return {
+        const result = {
             id: transaction.id,
             date: new Date(dateInMs),
             description: transaction.type_txt || 'Transaction',
             amount: amount,
-            currency: transaction.transactioncurrency?.currency_code || 'EUR',
+            currency: transaction.transactioncurrency?.currency_code || 'USD', // Default to USD
             type: transactionType,
             status: mapTransactionStatus(transaction.status_txt),
             accountId: transaction.identitybankaccount?.id || '',
@@ -111,6 +132,15 @@ export function adaptTransactionData(transaction: any): Transaction | null {
                 account: transaction.beneficiary.accountnumber_txt || transaction.beneficiary.beneficiary_bankaccountnumber_txt
             } : undefined
         };
+        
+        console.log('adaptTransactionData - Result:', {
+            id: result.id,
+            accountId: result.accountId,
+            currency: result.currency,
+            amount: result.amount
+        });
+        
+        return result;
     } catch (error) {
         console.error('Error adapting transaction:', error, transaction);
         return null;
@@ -133,7 +163,7 @@ export function adaptCurrencyData(currency: any): CurrencyInfo | null {
     }
 }
 
-export function adaptBeneficiaryData(beneficiary: any): Beneficiary | null {
+export function adaptBeneficiaryData(beneficiary: any): SimpleBeneficiary | null {
     if (!beneficiary) return null;
     
     try {

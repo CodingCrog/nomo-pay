@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDashboardData } from '../hooks/useApiData';
-import { mockAccounts, mockCurrencyBalances } from '../data/mockData';
 import { AccountSummaryCard, LocationSection } from '../features/accounts/components';
 import { AdaptiveLayout, ResponsiveGrid } from '../components/layout';
 import { useIsDesktop } from '../hooks';
@@ -8,15 +7,20 @@ import { ThemeToggle } from '../features/common/components/ThemeToggle';
 
 export const Dashboard: React.FC = () => {
   const isDesktop = useIsDesktop();
-  const { accounts: apiAccounts, balances: apiBalances, loading } = useDashboardData();
+  const { accounts, balances, loading } = useDashboardData();
   
-  // Use API data if available, otherwise fall back to mock data
-  const accounts = apiAccounts.length > 0 ? apiAccounts : mockAccounts;
-  const balances = apiBalances.length > 0 ? apiBalances : mockCurrencyBalances;
+  // Use real data from backend only
+  // No fallback to mock data
+  
+  console.log('Dashboard - Accounts:', accounts);
+  console.log('Dashboard - Balances:', balances);
   
   // Get balances for both accounts - show all balances including zero
   const londonAccount = accounts.find((acc: any) => acc.type === 'gb_based');
   const singaporeAccount = accounts.find((acc: any) => acc.type === 'numbered');
+  
+  console.log('Dashboard - London Account:', londonAccount);
+  console.log('Dashboard - Singapore Account:', singaporeAccount);
   
   const londonBalances = londonAccount 
     ? balances.filter((balance: any) => balance.accountId === londonAccount.id)

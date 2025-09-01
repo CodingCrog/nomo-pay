@@ -9,7 +9,7 @@ import { ReceivePage } from './pages/ReceivePage';
 import { ExchangePage } from './pages/ExchangePage';
 import { DepositPage } from './pages/DepositPage';
 import { WithdrawPage } from './pages/WithdrawPage';
-import { BeneficiariesPage } from './pages/BeneficiariesPage';
+import { BeneficiariesPage } from './pages/BeneficiariesPageBackend';
 import { SettingsPage } from './pages/SettingsPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { MorePage } from './pages/MorePage';
@@ -22,6 +22,15 @@ import { TransactionDebug } from './components/TransactionDebug';
 import { QueryTester } from './components/QueryTester';
 import { DebugControl } from './components/debug/DebugControl';
 import { TransactionTypeDebug } from './components/TransactionTypeDebug';
+import { AccountsDebug } from './components/AccountsDebug';
+import { TransactionsDebug } from './components/TransactionsDebug';
+import { TransactionQueryTest } from './components/TransactionQueryTest';
+import { SimpleTransactionTest } from './components/SimpleTransactionTest';
+import { MinimalTransactionTest } from './components/MinimalTransactionTest';
+import { DirectQueryTest } from './components/DirectQueryTest';
+import { BeneficiaryTest } from './components/BeneficiaryTest';
+import { BeneficiaryLoaderTest } from './components/BeneficiaryLoaderTest';
+import { NpayStyleBeneficiaryTest } from './components/NpayStyleBeneficiaryTest';
 
 function App() {
   const { colors, colorMode } = useTheme();
@@ -50,12 +59,39 @@ function App() {
         {/* Transaction Type Debug */}
         <TransactionTypeDebug />
         
+        {/* Accounts Debug */}
+        <AccountsDebug />
+        
+        {/* Transactions Debug */}
+        <TransactionsDebug />
+        
+        {/* Transaction Query Test */}
+        <TransactionQueryTest />
+        
+        {/* Simple Transaction Test */}
+        <SimpleTransactionTest />
+        
+        {/* Minimal Transaction Test */}
+        <MinimalTransactionTest />
+        
+        {/* Direct Query Test */}
+        <DirectQueryTest />
+        
+        {/* Beneficiary Test */}
+        <BeneficiaryTest />
+        
+        {/* Beneficiary Loader Test */}
+        <BeneficiaryLoaderTest />
+        
+        {/* Npay Style Beneficiary Test */}
+        <NpayStyleBeneficiaryTest />
+        
         {/* Query Tester */}
         <QueryTester />
         
         {/* Global background pattern */}
         <div 
-          className="fixed inset-0 pointer-events-none bg-cover bg-center bg-no-repeat"
+          className="fixed inset-0 pointer-events-none bg-cover bg-center bg-no-repeat z-0"
           style={{
             backgroundImage: colorMode === 'dark' 
               ? 'url(/images/dark-background.png)' 

@@ -8,8 +8,6 @@ import { validateDeposit, formatCurrency } from '../utils/validation';
 import { LoadingSpinner, LoadingOverlay } from '../components/LoadingSpinner';
 import { notificationManager } from '../utils/notificationManager';
 import { useTheme } from '../context/ThemeContext';
-import { mockAccounts } from '../data/mockAccounts';
-import { mockCurrencies } from '../data/mockCurrencies';
 
 interface PaymentMethod {
   id: string;
@@ -30,9 +28,9 @@ export const DepositPage: React.FC = () => {
   const { data: currencies } = useCurrencies();
   const { data: paymentMethods } = usePaymentMethods();
   
-  // Use accounts from API or fall back to mock data
-  const allAccounts = accounts.length > 0 ? accounts : mockAccounts;
-  const allCurrencies = currencies.length > 0 ? currencies : mockCurrencies;
+  // Use accounts from API
+  const allAccounts = accounts;
+  const allCurrencies = currencies;
   
   // Mock payment methods if no API data
   const mockPaymentMethods: PaymentMethod[] = [

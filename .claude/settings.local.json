@@ -19,7 +19,14 @@
       "mcp__filesystem__list_allowed_directories",
       "Bash(grep:*)",
       "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)",
-      "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)"
+      "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)",
+      "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)",
+      "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)",
+      "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)",
+      "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)",
+      "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)",
+      "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",

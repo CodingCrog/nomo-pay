@@ -7,6 +7,15 @@ interface AccountSummaryCardProps {
 }
 
 export const AccountSummaryCard: React.FC<AccountSummaryCardProps> = ({ accounts }) => {
+  // Check if we have accounts
+  if (!accounts || accounts.length === 0) {
+    return (
+      <div className="p-4 text-center text-gray-500">
+        No accounts available
+      </div>
+    );
+  }
+  
   // Create a combined account object for the Nomo Pay card
   const nomoPayAccount = {
     ...accounts[0], // Use first account as template

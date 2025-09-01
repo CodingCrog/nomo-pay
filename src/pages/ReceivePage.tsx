@@ -7,7 +7,6 @@ import { useIdentity } from '../hooks/useIdentity';
 import { useTheme } from '../context/ThemeContext';
 import { notificationManager } from '../utils/notificationManager';
 import { LoadingSpinner } from '../components/LoadingSpinner';
-import { mockAccounts } from '../data/mockAccounts';
 import type { Account } from '../types';
 
 interface AccountDetails {
@@ -22,8 +21,8 @@ export const ReceivePage: React.FC = () => {
   const { data: identity } = useIdentity();
   const { data: accounts, loading: accountsLoading } = useAccounts();
   
-  // Use accounts from API or fall back to mock data
-  const allAccounts = accounts.length > 0 ? accounts : mockAccounts;
+  // Use accounts from API
+  const allAccounts = accounts;
   
   const [selectedAccountId, setSelectedAccountId] = useState<string>(allAccounts[0]?.id || '');
   const [selectedFormat, setSelectedFormat] = useState<'domestic' | 'international'>('international');

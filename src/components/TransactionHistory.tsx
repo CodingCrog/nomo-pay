@@ -8,7 +8,7 @@ import type { Transaction } from '../types';
 import { TransactionItem } from './TransactionItem';
 import { ActionButton } from './ActionButton';
 import { useTheme } from '../context/ThemeContext';
-import { mockAccounts, mockCurrencyBalances } from '../data/mockData';
+import { useAccounts, useBalances } from '../api/client';
 
 interface TransactionHistoryProps {
   transactions: Transaction[];
@@ -43,13 +43,17 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   
+  // Get account and balances from API
+  const { data: accounts } = useAccounts();
+  const { data: balances } = useBalances(accountId);
+  
   // Get the current account
-  const account = mockAccounts.find(acc => acc.id === accountId);
+  const account = accounts.find(acc => acc.id === accountId);
   const isGBAccount = account?.type === 'gb_based';
   
   // Get all currency balances for this account with non-zero balances
-  const accountBalances = mockCurrencyBalances.filter(
-    (balance) => balance.accountId === accountId && balance.balance > 0
+  const accountBalances = balances.filter(
+    (balance) => balance.balance > 0
   ).sort((a, b) => b.balance - a.balance); // Sort by balance descending
   
   // Set initial currency index based on currencyCode
@@ -94,9 +98,21 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({
     swipeDuration: 250,
   });
   
+  // Debug logging
+  console.log('TransactionHistory Debug:');
+  console.log('- Account ID:', accountId);
+  console.log('- Active Currency Code:', activeCurrencyCode);
+  console.log('- All transactions:', transactions);
+  console.log('- Transaction accountIds:', transactions.map(t => ({ id: t.id, accountId: t.accountId, currency: t.currency })));
+  
   // Filter transactions by account and active currency
   const filteredTransactions = transactions
-    .filter(t => t.accountId === accountId && t.currency === activeCurrencyCode)
+    .filter(t => {
+      const matchesAccount = t.accountId === accountId;
+      const matchesCurrency = t.currency === activeCurrencyCode;
+      console.log(`Transaction ${t.id}: accountId match=${matchesAccount} (${t.accountId} === ${accountId}), currency match=${matchesCurrency} (${t.currency} === ${activeCurrencyCode})`);
+      return matchesAccount && matchesCurrency;
+    })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   
   // Group transactions by date
