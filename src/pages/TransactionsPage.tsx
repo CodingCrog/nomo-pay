@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Search, Calendar, Download } from 'lucide-react';
-import { useTransactions, useAccounts } from '../api/client';
+import { useTransactions, useAccounts } from '../core/api/client';
 import { TransactionItem } from '../components/TransactionItem';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { useTheme } from '../context/ThemeContext';

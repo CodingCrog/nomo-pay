@@ -1,5 +1,67 @@
 import { gql } from '@apollo/client';
 
+// Account-related mutations
+export const mutationCreateNpaIdentity = gql`
+    mutation(
+        $email: String!,
+        $first_name: String!,
+        $middle_name: String,
+        $last_name: String!,
+        $date_of_birth: String!,
+        $phone_number: String!,
+        $address_detail: String,
+        $address_detail2: String,
+        $address_city: String,
+        $address_zipcode: String,
+        $address_countystate: String,
+        $country_code: String!,
+        $nationality: String,
+        $is_crypto_use: Boolean,
+        $countries_send_funds_to: [String],
+        $average_monthly_outgoing: String!,
+        $is_political_exposed_person: Boolean!,
+        $political_exposed_person_case: String,
+    ){
+        create_npa_identity(
+            email: $email,
+            first_name: $first_name,
+            middle_name: $middle_name,
+            last_name: $last_name,
+            date_of_birth: $date_of_birth,
+            phone_number: $phone_number,
+            address_detail: $address_detail,
+            address_detail2: $address_detail2,
+            address_city: $address_city,
+            address_zipcode: $address_zipcode,
+            address_countystate: $address_countystate,
+            country_code: $country_code,
+            nationality: $nationality,
+            is_crypto_use: $is_crypto_use,
+            countries_send_funds_to: $countries_send_funds_to,
+            average_monthly_outgoing: $average_monthly_outgoing,
+            is_political_exposed_person: $is_political_exposed_person,
+            political_exposed_person_case: $political_exposed_person_case,
+        ) {
+            result
+            error
+        }
+    }
+`;
+
+export const mutationCreateNpaIdentityBankAccount = gql`
+    mutation(
+        $account_type: String!,
+    ){
+        create_npa_identity_bank_account(
+            account_type: $account_type,
+        ) {
+            result
+            error
+        }
+    }
+`;
+
+// Transaction mutations
 export const mutationCreateDeposit = gql`
     mutation (
         $bankaccount_id: String!,
@@ -55,6 +117,7 @@ export const mutationCreateInternalTransfer = gql`
     }
 `;
 
+// Beneficiary mutations
 export const mutationCreateNpaBeneficiary = gql`
     mutation (
         $transactioncurrency_id: String!,
@@ -130,6 +193,32 @@ export const mutationCreateNpaBeneficiary = gql`
     }
 `;
 
+export const mutationCreateNpaBeneficiaryAddress = gql`
+    mutation (
+        $beneficiary_id: String!,
+        $personal_address_line1: String!,
+        $personal_address_line2: String,
+        $personal_address_countrycode: String!,
+        $personal_address_city: String!,
+        $personal_address_state: String,
+        $personal_address_zipcode: String!,
+    ){
+        create_npa_beneficiary_address (
+            beneficiary_id: $beneficiary_id,
+            personal_address_line1: $personal_address_line1,
+            personal_address_line2: $personal_address_line2,
+            personal_address_countrycode: $personal_address_countrycode,
+            personal_address_city: $personal_address_city,
+            personal_address_state: $personal_address_state,
+            personal_address_zipcode: $personal_address_zipcode,
+        ){
+            result
+            error
+        }
+    }
+`;
+
+// FX Conversion mutations
 export const mutationCreateFxConversion = gql`
     mutation (
         $source_currency_id: String!,
@@ -156,6 +245,16 @@ export const mutationAcceptOrCancelFxConversion = gql`
             action: $action,
             banktransaction_id: $banktransaction_id,
         ){
+            result
+            error
+        }
+    }
+`;
+
+// Utility mutations
+export const mutationRefreshIdentityData = gql`
+    mutation {
+        refresh_identity_data {
             result
             error
         }
@@ -189,9 +288,9 @@ export const mutationClaimIdentity = gql`
     }
 `;
 
-export const mutationRefreshIdentityData = gql`
-    mutation {
-        refresh_identity_data {
+export const mutationCreateNpaEBoardingSession = gql`
+    mutation{
+        create_npa_eboarding_session {
             result
             error
         }

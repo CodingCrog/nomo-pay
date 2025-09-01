@@ -1,5 +1,5 @@
 import React from 'react';
-import { ResponsiveAccountCard } from '../../../components/ResponsiveAccountCard';
+import { AccountCard } from '../../../shared/components/AccountCard';
 import type { Account } from '../../../types';
 
 interface AccountSummaryCardProps {
@@ -25,7 +25,7 @@ export const AccountSummaryCard: React.FC<AccountSummaryCardProps> = ({ accounts
   
   return (
     <div>
-      <ResponsiveAccountCard account={nomoPayAccount} variant="full" />
+      <AccountCard account={nomoPayAccount} />
     </div>
   );
 };

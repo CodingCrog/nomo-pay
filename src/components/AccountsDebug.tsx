@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDataLoader } from 'nsw-frontend-core-lib';
-import { GQL_LOADERS } from '../api/loaders';
-import { useAccounts } from '../api/client';
+import { GQL_LOADERS } from '../core/api/loaders';
+import { useAccounts } from '../core/api/client';
 import { DebugPanel } from './debug/DebugPanel';
 
 export const AccountsDebug: React.FC = () => {

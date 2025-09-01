@@ -1,4 +1,4 @@
-import type { Account, CurrencyBalance, Transaction, CurrencyInfo, SimpleBeneficiary } from '../types';
+import type { Account, CurrencyBalance, Transaction, CurrencyInfo, SimpleBeneficiary } from '../../types';
 
 export function adaptBankAccountToAccount(bankAccount: any): Account | null {
     if (!bankAccount) {
@@ -36,11 +36,11 @@ export function adaptBankAccountToAccount(bankAccount: any): Account | null {
                 code: bankAccount.transactioncurrency.currency_code,
                 name: bankAccount.transactioncurrency.currency_txt,
                 symbol: getCurrencySymbol(bankAccount.transactioncurrency.currency_code),
-                decimals: 2
+                decimal: 2
             }] : [],
             chartData: {
                 labels: [],
-                data: []
+                values: []
             },
             lastUpdated: new Date(bankAccount.created_at || Date.now()),
             status: 'active'
@@ -62,7 +62,7 @@ export function adaptBankAccountToBalance(bankAccount: any): CurrencyBalance | n
                 code: bankAccount.transactioncurrency.currency_code,
                 name: bankAccount.transactioncurrency.currency_txt,
                 symbol: getCurrencySymbol(bankAccount.transactioncurrency.currency_code),
-                decimals: 2
+                decimal: 2
             },
             balance: parseFloat(bankAccount.balance || '0'),
             available: parseFloat(bankAccount.available_balance || bankAccount.balance || '0'),
@@ -86,8 +86,17 @@ export function adaptTransactionData(transaction: any): Transaction | null {
     });
     
     try {
-        // Convert Unix timestamp from seconds to milliseconds
-        const dateInMs = transaction.created_at * 1000;
+        // Handle date - could be a string or timestamp
+        let transactionDate: Date;
+        if (typeof transaction.created_at === 'string') {
+            transactionDate = new Date(transaction.created_at);
+        } else if (typeof transaction.created_at === 'number') {
+            // If it's a Unix timestamp (seconds), convert to milliseconds
+            const dateInMs = transaction.created_at * 1000;
+            transactionDate = new Date(dateInMs);
+        } else {
+            transactionDate = new Date();
+        }
         
         // Determine transaction type based on type_txt or type_char
         const typeTxt = transaction.type_txt?.toLowerCase() || '';
@@ -119,7 +128,7 @@ export function adaptTransactionData(transaction: any): Transaction | null {
         
         const result = {
             id: transaction.id,
-            date: new Date(dateInMs),
+            date: transactionDate,
             description: transaction.type_txt || 'Transaction',
             amount: amount,
             currency: transaction.transactioncurrency?.currency_code || 'USD', // Default to USD
@@ -169,7 +178,7 @@ export function adaptBeneficiaryData(beneficiary: any): SimpleBeneficiary | null
     try {
         return {
             id: beneficiary.id,
-            firstname: beneficiary.firstname_txt || beneficiary.accountholder_txt?.split(' ')[0] || '',
+            firstName: beneficiary.firstname_txt || beneficiary.accountholder_txt?.split(' ')[0] || '',
             lastname: beneficiary.lastname_txt || beneficiary.accountholder_txt?.split(' ').slice(1).join(' ') || '',
             email: beneficiary.email_txt || '',
             bankName: beneficiary.beneficiary_bankname_txt || beneficiary.regular_bankname_txt || '',

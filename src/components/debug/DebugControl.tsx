@@ -4,7 +4,8 @@ import { Bug, Eye, EyeOff } from 'lucide-react';
 export const DebugControl: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
   
-  if (!import.meta.env.VITE_FORCE_DEBUG) {
+  // Show in development mode or when VITE_FORCE_DEBUG is set
+  if (!import.meta.env.DEV && !import.meta.env.VITE_FORCE_DEBUG) {
     return null;
   }
   

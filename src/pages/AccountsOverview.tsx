@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { CurrencyBalance } from '../components/CurrencyBalance';
 import { ActionButton } from '../components/ActionButton';
 import { TransactionItem } from '../components/TransactionItem';
-import { useAccounts, useBalances, useTransactions } from '../api/client';
+import { useAccounts, useBalances, useTransactions } from '../core/api/client';
 import { 
   ArrowLeft, 
   ArrowUpRight, 

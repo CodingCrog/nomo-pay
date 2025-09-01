@@ -7,7 +7,7 @@ import {
     adaptCurrencyData,
     adaptBeneficiaryData 
 } from "./adapters";
-import type { Account, CurrencyBalance, Transaction, CurrencyInfo, SimpleBeneficiary } from '../types';
+import type { Account, CurrencyBalance, Transaction, CurrencyInfo, SimpleBeneficiary } from '../../types';
 
 export class ApiClient {
     static async getAccounts(): Promise<Account[]> {

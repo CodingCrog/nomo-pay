@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { coreLibQuery } from 'nsw-frontend-core-lib';
 import { gql } from '@apollo/client';
-import { getNpaIdentityBankTransactions } from '../api/queries';
+import { getNpaIdentityBankTransactions } from '../core/api/queries';
 import { DebugPanel } from './debug/DebugPanel';
 
 export const DirectQueryTest: React.FC = () => {

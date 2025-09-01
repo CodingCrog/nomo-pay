@@ -15,22 +15,8 @@ import { AnalyticsPage } from './pages/AnalyticsPage';
 import { MorePage } from './pages/MorePage';
 import { useTheme } from './context/ThemeContext';
 import { ConnectionStatus } from './components/ConnectionStatus';
-import { DebugDataView } from './components/DebugDataView';
-import { DataLoaderDebug } from './components/DataLoaderDebug';
 import { NotificationContainer } from './components/Notification';
-import { TransactionDebug } from './components/TransactionDebug';
-import { QueryTester } from './components/QueryTester';
-import { DebugControl } from './components/debug/DebugControl';
-import { TransactionTypeDebug } from './components/TransactionTypeDebug';
-import { AccountsDebug } from './components/AccountsDebug';
-import { TransactionsDebug } from './components/TransactionsDebug';
-import { TransactionQueryTest } from './components/TransactionQueryTest';
-import { SimpleTransactionTest } from './components/SimpleTransactionTest';
-import { MinimalTransactionTest } from './components/MinimalTransactionTest';
-import { DirectQueryTest } from './components/DirectQueryTest';
-import { BeneficiaryTest } from './components/BeneficiaryTest';
-import { BeneficiaryLoaderTest } from './components/BeneficiaryLoaderTest';
-import { NpayStyleBeneficiaryTest } from './components/NpayStyleBeneficiaryTest';
+import { DebugContainer } from './components/debug/DebugContainer';
 
 function App() {
   const { colors, colorMode } = useTheme();
@@ -38,56 +24,14 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen transition-colors duration-300 relative" style={{ backgroundColor: colors.background1 }}>
-        {/* Debug Control */}
-        <DebugControl />
+        {/* Debug Container - Only in development */}
+        <DebugContainer />
         
         {/* Notifications */}
         <NotificationContainer />
         
         {/* Connection Status Indicator */}
         <ConnectionStatus />
-        
-        {/* Debug Data View */}
-        <DebugDataView />
-        
-        {/* Data Loader Debug */}
-        <DataLoaderDebug />
-        
-        {/* Transaction Debug */}
-        <TransactionDebug />
-        
-        {/* Transaction Type Debug */}
-        <TransactionTypeDebug />
-        
-        {/* Accounts Debug */}
-        <AccountsDebug />
-        
-        {/* Transactions Debug */}
-        <TransactionsDebug />
-        
-        {/* Transaction Query Test */}
-        <TransactionQueryTest />
-        
-        {/* Simple Transaction Test */}
-        <SimpleTransactionTest />
-        
-        {/* Minimal Transaction Test */}
-        <MinimalTransactionTest />
-        
-        {/* Direct Query Test */}
-        <DirectQueryTest />
-        
-        {/* Beneficiary Test */}
-        <BeneficiaryTest />
-        
-        {/* Beneficiary Loader Test */}
-        <BeneficiaryLoaderTest />
-        
-        {/* Npay Style Beneficiary Test */}
-        <NpayStyleBeneficiaryTest />
-        
-        {/* Query Tester */}
-        <QueryTester />
         
         {/* Global background pattern */}
         <div 

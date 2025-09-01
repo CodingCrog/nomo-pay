@@ -3,7 +3,7 @@ import { X, Save } from 'lucide-react';
 import type { BeneficiaryFormData } from '../types';
 import { REQUIRED_FIELDS } from '../types';
 import { useDataLoader } from 'nsw-frontend-core-lib';
-import { GQL_LOADERS } from '../api/loaders';
+import { GQL_LOADERS } from '../core/api/loaders';
 import { useTheme } from '../context/ThemeContext';
 
 interface BeneficiaryFormProps {

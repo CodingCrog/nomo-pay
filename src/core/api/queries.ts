@@ -152,14 +152,16 @@ const gqlPropsBankTransaction = `
     type_char
     type_txt
     identitybankaccount {
-        id
-        type_char
-        balance
+        ${gqlPropsNpaBankAccount}
     }
     transactioncurrency {
-        id
-        currency_code
-        currency_name
+        ${gqlPropsCurrency}
+    }
+    beneficiary {
+        ${gqlPropsBeneficiary}
+    }
+    documents {
+        ${gqlPropsIdentityDocument}
     }
 `;
 

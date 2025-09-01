@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDataLoader, coreLibQuery } from 'nsw-frontend-core-lib';
-import { GQL_LOADERS } from '../api/loaders';
+import { GQL_LOADERS } from '../core/api/loaders';
 import { gql } from '@apollo/client';
 import { DebugPanel } from './debug/DebugPanel';
 

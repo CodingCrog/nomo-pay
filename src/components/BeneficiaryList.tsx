@@ -3,7 +3,7 @@ import { Edit2, Trash2, Mail, MapPin, Building, Search } from 'lucide-react';
 import type { StoredBeneficiary } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { useDataLoader } from 'nsw-frontend-core-lib';
-import { GQL_LOADERS } from '../api/loaders';
+import { GQL_LOADERS } from '../core/api/loaders';
 
 interface BeneficiaryListProps {
   beneficiaries: StoredBeneficiary[];

@@ -1,5 +1,5 @@
 import { useDataLoader } from 'nsw-frontend-core-lib';
-import { GQL_LOADERS } from '../api/loaders';
+import { GQL_LOADERS } from '../core/api/loaders';
 
 export interface Identity {
   id: string;

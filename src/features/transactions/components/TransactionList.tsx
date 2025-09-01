@@ -17,7 +17,7 @@ export const TransactionList: React.FC<TransactionListProps> = ({
   
   // Group transactions by date
   const groupedTransactions = transactions.reduce((groups, transaction) => {
-    const dateKey = new Date(transaction.orderDate).toISOString().split('T')[0];
+    const dateKey = transaction.orderDate ? new Date(transaction.orderDate).toISOString().split('T')[0] : 'unknown';
     if (!groups[dateKey]) {
       groups[dateKey] = [];
     }
@@ -43,7 +43,7 @@ export const TransactionList: React.FC<TransactionListProps> = ({
             className="text-xs font-medium mb-3 px-1"
             style={{ color: colors.foreground3 }}
           >
-            {formatDateHeader(new Date(dayTransactions[0].orderDate))}
+            {formatDateHeader(dayTransactions[0].orderDate ? new Date(dayTransactions[0].orderDate) : new Date())}
           </h2>
           <div className="space-y-2">
             {dayTransactions.map((transaction) => (

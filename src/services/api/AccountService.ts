@@ -1,4 +1,4 @@
-import { ApiClient } from '../../api/client';
+import { ApiClient } from '../../core/api/client';
 import type { Account, CurrencyBalance } from '../../types';
 
 export class AccountService {

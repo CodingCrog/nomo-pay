@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { TransactionHistory } from '../components/TransactionHistory';
-import { useTransactions } from '../api/client';
+import { useTransactions } from '../core/api/client';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 
 export const TransactionHistoryPage: React.FC = () => {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Copy, Share2, QrCode, CheckCircle, Download } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
-import { useAccounts } from '../api/client';
+import { useAccounts } from '../core/api/client';
 import { useIdentity } from '../hooks/useIdentity';
 import { useTheme } from '../context/ThemeContext';
 import { notificationManager } from '../utils/notificationManager';

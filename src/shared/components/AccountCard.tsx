@@ -1,16 +1,16 @@
 import React from 'react';
-import type { Account } from '../types';
+import type { Account } from '../../types';
 import { Wifi } from 'lucide-react';
-import { useBreakpoint } from '../hooks';
-import { formatCurrency } from '../utils';
+import { useBreakpoint } from '../../hooks';
+import { formatCurrency } from '../../utils/formatters';
 
-interface ResponsiveAccountCardProps {
+interface AccountCardProps {
   account: Account;
   onClick?: () => void;
   variant?: 'full' | 'compact';
 }
 
-export const ResponsiveAccountCard: React.FC<ResponsiveAccountCardProps> = ({ 
+export const AccountCard: React.FC<AccountCardProps> = ({ 
   account, 
   onClick
 }) => {
@@ -56,7 +56,6 @@ export const ResponsiveAccountCard: React.FC<ResponsiveAccountCardProps> = ({
         </div>
       </div>
 
-
       {/* Content */}
       <div className="relative z-10 p-4 sm:p-5 md:p-6 h-full flex flex-col">
         {/* Top Row - Chip and Contactless */}
@@ -85,7 +84,7 @@ export const ResponsiveAccountCard: React.FC<ResponsiveAccountCardProps> = ({
               NOMOPAY
             </p>
             <p className="text-white/70 text-xs font-medium">
-              GOLD
+              {account.type === 'gb_based' ? 'GOLD' : 'PLATINUM'}
             </p>
           </div>
         </div>
@@ -122,7 +121,6 @@ export const ResponsiveAccountCard: React.FC<ResponsiveAccountCardProps> = ({
             </p>
           </div>
         </div>
-
 
         {/* Hover overlay for desktop */}
         {isDesktop && (

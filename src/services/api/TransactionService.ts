@@ -1,4 +1,4 @@
-import { ApiClient } from '../../api/client';
+import { ApiClient } from '../../core/api/client';
 import type { Transaction } from '../../types';
 
 export class TransactionService {

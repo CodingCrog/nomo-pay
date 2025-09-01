@@ -73,7 +73,7 @@ export const Dashboard: React.FC = () => {
             <LocationSection 
               location="london" 
               balances={londonBalances}
-              onLocationClick={() => console.log('London clicked')}
+              onLocationClick={() => {}}
             />
           </div>
 
@@ -82,7 +82,7 @@ export const Dashboard: React.FC = () => {
             <LocationSection 
               location="singapore" 
               balances={singaporeBalances}
-              onLocationClick={() => console.log('Singapore clicked')}
+              onLocationClick={() => {}}
             />
           </div>
         </ResponsiveGrid>

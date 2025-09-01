@@ -4,7 +4,7 @@ import {
   useTransactions as useTransactionsApi,
   useCurrencies as useCurrenciesApi,
   useBeneficiaries as useBeneficiariesApi
-} from '../api/client';
+} from '../core/api/client';
 import type { Account } from '../types';
 
 // Re-export the API hooks with a more convenient interface

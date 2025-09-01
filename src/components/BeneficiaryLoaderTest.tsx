@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDataLoader } from 'nsw-frontend-core-lib';
-import { GQL_LOADERS } from '../api/loaders';
+import { GQL_LOADERS } from '../core/api/loaders';
 import { DebugPanel } from './debug/DebugPanel';
 
 export const BeneficiaryLoaderTest: React.FC = () => {

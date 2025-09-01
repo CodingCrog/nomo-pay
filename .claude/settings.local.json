@@ -28,7 +28,17 @@
       "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)",
       "Bash(git log:*)",
       "Bash(open http://localhost:5174)",
-      "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)"
+      "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)",
+      "Bash(tree:*)",
+      "Bash(find:*)",
+      "Read(/Users/ilijaGlavas/StudioProjects/npay-fe/**)",
+      "Bash(for:*)",
+      "Bash(do)",
+      "Bash(if [ -f \"$file\" ])",
+      "Bash(then)",
+      "Bash(sed:*)",
+      "Bash(fi)",
+      "Bash(done)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",

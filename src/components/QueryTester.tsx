@@ -6,7 +6,7 @@ import {
   getNpaIdentityBankTransactions,
   getNpaTransactionCurrencies,
   getNpaBeneficiaries
-} from '../api/queries';
+} from '../core/api/queries';
 import { DebugPanel } from './debug/DebugPanel';
 
 export const QueryTester: React.FC = () => {

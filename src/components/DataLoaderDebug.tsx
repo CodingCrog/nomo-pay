@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDataLoader, coreLibQuery } from 'nsw-frontend-core-lib';
-import { GQL_LOADERS } from '../api/loaders';
-import { getNpaIdentity, getNpaIdentityBankTransactions } from '../api/queries';
+import { GQL_LOADERS } from '../core/api/loaders';
+import { getNpaIdentity, getNpaIdentityBankTransactions } from '../core/api/queries';
 import { useTheme } from '../context/ThemeContext';
 import { DebugPanel } from './debug/DebugPanel';
 

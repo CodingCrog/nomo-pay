@@ -8,7 +8,7 @@ import type { Transaction } from '../types';
 import { TransactionItem } from './TransactionItem';
 import { ActionButton } from './ActionButton';
 import { useTheme } from '../context/ThemeContext';
-import { useAccounts, useBalances } from '../api/client';
+import { useAccounts, useBalances } from '../core/api/client';
 
 interface TransactionHistoryProps {
   transactions: Transaction[];
